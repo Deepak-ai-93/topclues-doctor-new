@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Medicine — Premium Healthcare Digital Marketing Agency</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            green: '#16A34A',
+                            lightGreen: '#DCFCE7',
+                            darkGreen: '#166534',
+                            mint: '#ECFDF5',
+                            dark: '#111111',
+                            grayText: '#4A4A4A',
+                            border: '#E5E7EB',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome & Lucide Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- GSAP & Lenis CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FFFFFF;
+            color: #111111;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        /* Custom Custom Scrollbar for Vertical Panels */
+        .vertical-scroll-panel::-webkit-scrollbar {
+            width: 6px;
+        }
+        .vertical-scroll-panel::-webkit-scrollbar-track {
+            background: #F9FAFB;
+        }
+        .vertical-scroll-panel::-webkit-scrollbar-thumb {
+            background: #D1D5DB;
+            border-radius: 9999px;
+        }
+        .vertical-scroll-panel::-webkit-scrollbar-thumb:hover {
+            background: #16A34A;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #16A34A;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            z-index: 99999;
+            mix-blend-mode: difference;
+        }
+        .custom-cursor-dot {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 6px;
+            background-color: #16A34A;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100000;
+        }
+
+        /* Noise Texture Overlay */
+        .noise-bg {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+
+        /* Horizontal Container layout */
+        #horizontal-wrapper {
+            display: flex;
+            width: 600vw;
+            height: 100vh;
+            flex-wrap: nowrap;
+            position: relative;
+        }
+        .horizontal-section {
+            width: 100vw;
+            height: 100vh;
+            flex-shrink: 0;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Floating Blob Animations */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+        .floating-shape {
+            animation: floatSlow 6s ease-in-out infinite;
+        }
+        .floating-shape-delayed {
+            animation: floatSlow 8s ease-in-out infinite 2s;
+        }
+
+        /* Glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+        }
+
+        /* Dock styling */
+        .menu-dock {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(229, 231, 235, 0.9);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        .dock-item {
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+        }
+        .dock-item:hover {
+            transform: translateY(-4px) scale(1.05);
+    </style>
+</head>
+<body class="noise-bg">
+
+    <!-- Custom Cursor Elements -->
+    <div class="custom-cursor hidden md:block"></div>
+    <div class="custom-cursor-dot hidden md:block"></div>
+
+    <!-- Loading Screen -->
+    <div id="loader" class="fixed inset-0 z-[100000] bg-brand-dark text-white flex flex-col items-center justify-center transition-opacity duration-700">
+        <div class="text-center p-6">
+            <img src="assets/TCS@Logo-04.png" alt="Marketing Medicine Logo" class="h-12 sm:h-16 md:h-20 w-auto max-w-[240px] sm:max-w-[320px] mx-auto mb-6 object-contain filter drop-shadow-lg">
+            <div class="w-48 h-1 bg-neutral-800 rounded-full overflow-hidden mx-auto">
+                <div id="loader-bar" class="w-0 h-full bg-brand-green transition-all duration-300"></div>
+            </div>
+            <p class="text-xs text-neutral-400 mt-3 font-mono uppercase tracking-widest">Initializing Digital Therapeutics...</p>
+        </div>
+    </div>
+
+    <!-- Fixed Top Navigation Bar with Responsive Logo -->
+    <header class="fixed top-0 left-0 w-full z-40 bg-white/90 backdrop-blur-md border-b border-neutral-200/80 px-4 sm:px-8 py-3 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#" onclick="goToSlide(0); return false;" class="flex items-center gap-3 group focus:outline-none" title="Marketing Medicine Home">
+                <img src="assets/TCS@Logo-04.png" alt="Marketing Medicine Logo" class="h-8 sm:h-10 md:h-12 w-auto max-w-[160px] sm:max-w-[220px] md:max-w-[260px] object-contain transition-transform duration-300 group-hover:scale-[1.03]">
+            </a>
+            <div class="flex items-center gap-3">
+                <button onclick="goToSlide(5)" class="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-gradient-to-r from-brand-green to-brand-darkGreen text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all duration-300">
+                    Book Consultation
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Horizontal Navigation Progress Bar -->
+    <div class="fixed top-[57px] sm:top-[65px] md:top-[73px] left-0 w-full h-1 bg-neutral-100 z-40">
+        <div id="horizontal-progress" class="h-full bg-brand-green transition-all duration-300" style="width: 16.66%;"></div>
+    </div>
+
+    <!-- HORIZONTAL WRAPPER CONTAINER -->
+    <div id="horizontal-wrapper" class="pt-[60px] sm:pt-[68px] md:pt-[76px]">
+
+        <!-- ================= PAGE 1: HOME ================= -->
+        <section class="horizontal-section vertical-scroll-panel" id="page-home">
+            <div class="min-h-full pt-16 pb-32 px-6 lg:px-20 max-w-7xl mx-auto flex flex-col justify-between">
+                
+                <!-- Hero Content -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center my-auto py-12">
+                    <div class="lg:col-span-7">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-mint text-brand-darkGreen text-xs font-bold uppercase tracking-wider mb-6 shadow-sm">
+                            <i class="fa-solid fa-shield-heart"></i> Precision Medical Marketing
+                        </div>
+                        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-brand-dark leading-[1.08] mb-6">
+                            From Consultation Room <br>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-green to-brand-darkGreen">to DIGITAL ROOM</span>
+                        </h1>
+                        <p class="text-lg sm:text-xl text-brand-grayText font-normal mb-8 max-w-xl leading-relaxed">
+                            We Diagnose. We Prescribe. We Grow Your Practice. Elevating world-class doctors and elite hospitals through high-converting digital ecosystems.
+                        </p>
+                        
+                        <div class="flex flex-wrap items-center gap-4">
+                            <button onclick="goToSlide(1)" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-green to-brand-darkGreen text-white font-bold text-base shadow-xl shadow-brand-green/30 hover:shadow-brand-green/50 transition-all duration-300 flex items-center gap-3 group">
+                                <span>Explore Digital Doses</span>
+                                <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                            <button onclick="goToSlide(5)" class="px-8 py-4 rounded-2xl bg-white border border-brand-border text-brand-dark font-bold text-base hover:bg-neutral-50 shadow-sm transition-all duration-300">
+                                Book Consultation
+                            </button>
+                        </div>
+
+                        <!-- Trusted by counters badge -->
+                        <div class="mt-12 pt-8 border-t border-brand-border flex items-center gap-6">
+                            <div class="flex -space-x-3 overflow-hidden">
+                                <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&auto=format&fit=crop&q=80" alt="Doctor" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
+                                <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&auto=format&fit=crop&q=80" alt="Doctor" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
+                                <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=100&auto=format&fit=crop&q=80" alt="Doctor" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
+                                <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1594824813578-8316c0245a16?w=100&auto=format&fit=crop&q=80" alt="Doctor" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
+                            </div>
+                            <div>
+                                <div class="text-sm font-bold text-brand-dark flex items-center gap-1">
+                                    <span class="text-brand-green text-lg font-extrabold">40+</span> Elite Doctors & Hospitals
+                                </div>
+                                <p class="text-xs text-brand-grayText">Scaling patient acquisition organically & profitably.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Hero Illustration & Floating Cards -->
+                    <div class="lg:col-span-5 relative">
+                        <div class="absolute -top-10 -left-10 w-72 h-72 bg-brand-lightGreen rounded-full filter blur-3xl opacity-70 z-0"></div>
+                        <div class="relative z-10 glass-card p-6 rounded-[32px] shadow-2xl border border-white">
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-xl">
+                                        <i class="fa-solid fa-chart-line-up"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sm text-brand-dark">Clinical Growth Metric</h4>
+                                        <p class="text-xs text-brand-grayText">Real-time patient booking velocity</p>
+                                    </div>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-full bg-brand-lightGreen text-brand-darkGreen text-xs font-bold">+340%</span>
+                            </div>
+
+                            <!-- Interactive Chart Mockup -->
+                            <div class="bg-neutral-50 p-4 rounded-2xl mb-6 border border-brand-border">
+                                <div class="flex justify-between items-end h-36 gap-2 pt-4">
+                                    <div class="w-1/6 bg-neutral-200 rounded-t-lg h-[30%]"></div>
+                                    <div class="w-1/6 bg-neutral-200 rounded-t-lg h-[45%]"></div>
+                                    <div class="w-1/6 bg-brand-green/40 rounded-t-lg h-[65%]"></div>
+                                    <div class="w-1/6 bg-brand-green/70 rounded-t-lg h-[80%]"></div>
+                                    <div class="w-1/6 bg-brand-green rounded-t-lg h-[100%] shadow-lg shadow-brand-green/30"></div>
+                                </div>
+                                <div class="flex justify-between mt-3 text-[10px] text-brand-grayText font-semibold uppercase">
+                                    <span>Jan</span><span>Mar</span><span>May</span><span>Jul</span><span>Now</span>
+                                </div>
+                            </div>
+
+                            <!-- Floating badge 1 -->
+                            <div class="absolute -bottom-6 -left-6 glass-card px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 floating-shape">
+                                <div class="w-8 h-8 rounded-full bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center">
+                                    <i class="fa-solid fa-user-doctor"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[11px] font-bold text-brand-dark">Verified Patient Trust</p>
+                                    <p class="text-[10px] text-brand-grayText">99.4% Appointment Satisfaction</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Section Below Hero -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 py-12 border-t border-brand-border">
+                    <div class="p-6 rounded-2xl bg-neutral-50 border border-brand-border">
+                        <div class="text-3xl lg:text-4xl font-extrabold text-brand-dark mb-1">2.4M+</div>
+                        <div class="text-sm font-semibold text-brand-green mb-1">Digital Patient Reach</div>
+                        <p class="text-xs text-brand-grayText">Targeted monthly views across digital health channels.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-neutral-50 border border-brand-border">
+                        <div class="text-3xl lg:text-4xl font-extrabold text-brand-dark mb-1">100%</div>
+                        <div class="text-sm font-semibold text-brand-green mb-1">Online Medical Presence</div>
+                        <p class="text-xs text-brand-grayText">HIPAA-compliant, high-authority digital footprints.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-neutral-50 border border-brand-border">
+                        <div class="text-3xl lg:text-4xl font-extrabold text-brand-dark mb-1">+310%</div>
+                        <div class="text-sm font-semibold text-brand-green mb-1">Healthcare Growth</div>
+                        <p class="text-xs text-brand-grayText">Average annual revenue increase per partnered clinic.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-neutral-50 border border-brand-border">
+                        <div class="text-3xl lg:text-4xl font-extrabold text-brand-dark mb-1">40+</div>
+                        <div class="text-sm font-semibold text-brand-green mb-1">Doctor Brand Building</div>
+                        <p class="text-xs text-brand-grayText">Recognized key opinion leaders in medicine.</p>
+                    </div>
+                </div>
+
+                <!-- Swipe Indicator -->
+                <div class="text-center py-6 flex flex-col items-center gap-2">
+                    <span class="text-xs font-bold uppercase tracking-widest text-brand-grayText">Swipe to Explore Plans</span>
+                    <i class="fa-solid fa-arrow-down animate-bounce text-brand-green"></i>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= PAGE 2: PLANS ================= -->
+        <section class="horizontal-section vertical-scroll-panel bg-neutral-50/50" id="page-plans">
+            <div class="min-h-full pt-20 pb-32 px-6 lg:px-20 max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-lightGreen text-brand-darkGreen text-xs font-bold uppercase tracking-wider mb-4">
+                        <i class="fa-solid fa-prescription-bottle-medical"></i> Clinical Prescriptions
+                    </div>
+                    <h2 class="text-4xl sm:text-5xl font-extrabold text-brand-dark tracking-tight mb-4">Our Digital Doses</h2>
+                    <p class="text-brand-grayText text-base sm:text-lg">Tailored marketing prescriptions designed for solo practices, multi-specialty clinics, and large hospital networks.</p>
+                </div>
+
+                <!-- Plans Grid / Cards Carousel -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    
+                    <!-- Plan 1: Starter Dose -->
+                    <div class="glass-card rounded-[28px] p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between border border-brand-border relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-brand-lightGreen rounded-bl-full opacity-50 z-0"></div>
+                        <div class="relative z-10">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-2xl mb-6 shadow-inner">
+                                <i class="fa-solid fa-seedling"></i>
+                            </div>
+                            <h3 class="text-2xl font-extrabold text-brand-dark mb-2">Starter Dose</h3>
+                            <p class="text-xs text-brand-grayText mb-6">For emerging solo practitioners looking to establish a credible online identity.</p>
+                            
+                            <div class="space-y-3 mb-8 text-sm text-brand-dark font-medium">
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Google Business Profile Setup</div>
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> 4 Social Media Posts /mo</div>
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Basic SEO Optimization</div>
+                                <div class="flex items-center gap-3 text-neutral-400"><i class="fa-solid fa-xmark text-neutral-300"></i> Paid Patient Ads</div>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 pt-6 border-t border-brand-border">
+                            <div class="text-xs text-brand-grayText uppercase font-semibold">Investment</div>
+                            <div class="text-3xl font-extrabold text-brand-dark mb-4">₹1,15,000<span class="text-sm font-normal text-brand-grayText">/mo</span></div>
+                            <button onclick="goToSlide(5)" class="w-full py-3 rounded-xl bg-neutral-100 hover:bg-brand-green hover:text-white font-bold text-sm text-brand-dark transition-all duration-300">
+                                Select Starter Dose
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Plan 2: Growth Dose (Featured) -->
+                    <div class="bg-gradient-to-b from-brand-dark to-neutral-900 text-white rounded-[28px] p-8 shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between relative overflow-hidden group border-2 border-brand-green">
+                        <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand-green rounded-full filter blur-3xl opacity-30 z-0"></div>
+                        <div class="absolute top-4 right-4 bg-brand-green text-white text-[10px] uppercase font-extrabold px-3 py-1 rounded-full tracking-widest shadow-md">Most Popular</div>
+                        
+                        <div class="relative z-10">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-green/20 text-brand-green flex items-center justify-center text-2xl mb-6 shadow-inner">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                            <h3 class="text-2xl font-extrabold mb-2 text-white">Growth Dose</h3>
+                            <p class="text-xs text-neutral-400 mb-6">For growing clinics wanting consistent monthly patient inquiries and robust local authority.</p>
+                            
+                            <div class="space-y-3 mb-8 text-sm text-neutral-200 font-medium">
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Advanced Local SEO & Maps</div>
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> 12 High-Impact Social Posts</div>
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Google & Meta Patient Ads</div>
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Reputation & Review Engine</div>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 pt-6 border-t border-neutral-800">
+                            <div class="text-xs text-neutral-400 uppercase font-semibold">Investment</div>
+                            <div class="text-3xl font-extrabold mb-4 text-white">₹2,55,000<span class="text-sm font-normal text-neutral-400">/mo</span></div>
+                            <button onclick="goToSlide(5)" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-green to-brand-darkGreen text-white font-bold text-sm shadow-lg shadow-brand-green/30 hover:shadow-brand-green/50 transition-all duration-300">
+                                Select Growth Dose
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Plan 3: Power Dose -->
+                    <div class="glass-card rounded-[28px] p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between border border-brand-border relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-brand-lightGreen rounded-bl-full opacity-50 z-0"></div>
+                        <div class="relative z-10">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-2xl mb-6 shadow-inner">
+                                <i class="fa-solid fa-bolt-lightning"></i>
+                            </div>
+                            <h3 class="text-2xl font-extrabold text-brand-dark mb-2">Power Dose</h3>
+                            <p class="text-xs text-brand-grayText mb-6">For multi-specialty clinics dominating regional markets and patient volume.</p>
+                            
+                            <div class="space-y-3 mb-8 text-sm text-brand-dark font-medium">
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Omnichannel Patient Funnels</div>
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Custom Video Content Creation</div>
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Dedicated Growth Strategist</div>
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Automated CRM Lead Routing</div>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 pt-6 border-t border-brand-border">
+                            <div class="text-xs text-brand-grayText uppercase font-semibold">Investment</div>
+                            <div class="text-3xl font-extrabold text-brand-dark mb-4">₹4,65,000<span class="text-sm font-normal text-brand-grayText">/mo</span></div>
+                            <button onclick="goToSlide(5)" class="w-full py-3 rounded-xl bg-neutral-100 hover:bg-brand-green hover:text-white font-bold text-sm text-brand-dark transition-all duration-300">
+                                Select Power Dose
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Plan 4: Ultimate Dose -->
+                    <div class="glass-card rounded-[28px] p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between border border-brand-border relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-brand-lightGreen rounded-bl-full opacity-50 z-0"></div>
+                        <div class="relative z-10">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-2xl mb-6 shadow-inner">
+                                <i class="fa-solid fa-hospital"></i>
+                            </div>
+                            <h3 class="text-2xl font-extrabold text-brand-dark mb-2">Ultimate Dose</h3>
+                            <p class="text-xs text-brand-grayText mb-6">For hospital networks and enterprise healthcare systems requiring total market dominance.</p>
+                            
+                            <div class="space-y-3 mb-8 text-sm text-brand-dark font-medium">
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Enterprise National Campaigns</div>
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> PR & Medical Journal Authority</div>
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Custom AI Patient Chatbots</div>
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> 24/7 Executive Management</div>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 pt-6 border-t border-brand-border">
+                            <div class="text-xs text-brand-grayText uppercase font-semibold">Investment</div>
+                            <div class="text-3xl font-extrabold text-brand-dark mb-4">Custom<span class="text-sm font-normal text-brand-grayText">/Enterprise</span></div>
+                            <button onclick="goToSlide(5)" class="w-full py-3 rounded-xl bg-neutral-100 hover:bg-brand-green hover:text-white font-bold text-sm text-brand-dark transition-all duration-300">
+                                Request Enterprise
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= PAGE 3: ABOUT ================= -->
+        <section class="horizontal-section vertical-scroll-panel" id="page-about">
+            <div class="min-h-full pt-20 pb-32 px-6 lg:px-20 max-w-7xl mx-auto">
+                
+                <!-- Headline & Storytelling -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
+                    <div class="lg:col-span-7">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-mint text-brand-darkGreen text-xs font-bold uppercase tracking-wider mb-6">
+                            <i class="fa-solid fa-dna"></i> Our Philosophy
+                        </div>
+                        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-brand-dark leading-[1.1] mb-6">
+                            We Don't Just Market Clinics.<br>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-green to-brand-darkGreen">We Build Healthcare Brands.</span>
+                        </h2>
+                        <p class="text-lg text-brand-grayText mb-6 leading-relaxed">
+                            Traditional marketing agencies treat healthcare like e-commerce. They use aggressive sales tactics and clickbait. At Marketing Medicine, we believe patient trust is sacred. Our approach is clinical, evidence-based, and deeply empathetic.
+                        </p>
+                        <p class="text-brand-grayText mb-8 leading-relaxed">
+                            Founded by a team of medical doctors and elite digital architects, we bridge the gap between complex medical expertise and the patients who urgently need trusted care.
+                        </p>
+                    </div>
+
+                    <!-- Cinematic Video Mockup Container -->
+                    <div class="lg:col-span-5">
+                        <div class="relative rounded-[32px] overflow-hidden shadow-2xl border-4 border-white group">
+                            <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&auto=format&fit=crop&q=80" alt="Modern Clinic" class="w-full h-[360px] object-cover group-hover:scale-105 transition-transform duration-700" onerror="this.src='https://placehold.co/600x400/16A34A/FFFFFF?text=Marketing+Medicine'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent flex flex-col justify-end p-8 text-white">
+                                <div class="w-12 h-12 rounded-full bg-brand-green flex items-center justify-center text-white mb-3 shadow-lg shadow-brand-green/50 cursor-pointer">
+                                    <i class="fa-solid fa-play ml-0.5"></i>
+                                </div>
+                                <h4 class="text-xl font-bold">Watch Our Clinical Story</h4>
+                                <p class="text-xs text-neutral-300">How we transformed 40+ medical practices into regional authorities.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Animated Timeline / 4-Step Clinical Process -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-extrabold text-brand-dark text-center mb-12">The Clinical Growth Protocol</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div class="glass-card p-6 rounded-2xl relative border border-brand-border">
+                            <span class="text-3xl font-extrabold text-brand-green block mb-3 font-mono">01</span>
+                            <h4 class="font-bold text-lg text-brand-dark mb-2">Diagnose</h4>
+                            <p class="text-xs text-brand-grayText">Comprehensive audit of your online reputation, local SEO rank, and patient conversion bottlenecks.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl relative border border-brand-border">
+                            <span class="text-3xl font-extrabold text-brand-green block mb-3 font-mono">02</span>
+                            <h4 class="font-bold text-lg text-brand-dark mb-2">Prescribe</h4>
+                            <p class="text-xs text-brand-grayText">Tailoring a customized digital strategy focusing on high-value clinical procedures and patient trust.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl relative border border-brand-border">
+                            <span class="text-3xl font-extrabold text-brand-green block mb-3 font-mono">03</span>
+                            <h4 class="font-bold text-lg text-brand-dark mb-2">Treat</h4>
+                            <p class="text-xs text-brand-grayText">Deploying HIPAA-compliant campaigns, high-authority content, and automated patient booking funnels.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl relative border border-brand-border">
+                            <span class="text-3xl font-extrabold text-brand-green block mb-3 font-mono">04</span>
+                            <h4 class="font-bold text-lg text-brand-dark mb-2">Grow</h4>
+                            <p class="text-xs text-brand-grayText">Continuous optimization, review generation, and compounding online patient acquisition year over year.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission, Vision, Values Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="p-8 rounded-[24px] bg-neutral-50 border border-brand-border">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-xl mb-6">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-brand-dark mb-3">Our Mission</h4>
+                        <p class="text-sm text-brand-grayText leading-relaxed">To empower ethical medical practitioners with world-class digital visibility so every patient finds the right doctor instantly.</p>
+                    </div>
+                    <div class="p-8 rounded-[24px] bg-neutral-50 border border-brand-border">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-xl mb-6">
+                            <i class="fa-solid fa-eye"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-brand-dark mb-3">Our Vision</h4>
+                        <p class="text-sm text-brand-grayText leading-relaxed">To eradicate digital noise in healthcare and set the global gold standard for transparent, patient-centric marketing.</p>
+                    </div>
+                    <div class="p-8 rounded-[24px] bg-neutral-50 border border-brand-border">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-xl mb-6">
+                            <i class="fa-solid fa-handshake-angle"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-brand-dark mb-3">Core Values</h4>
+                        <p class="text-sm text-brand-grayText leading-relaxed">Clinical Integrity first. Radical transparency in metrics. Uncompromising patient privacy and empathetic storytelling.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= PAGE 4: TESTIMONIALS ================= -->
+        <section class="horizontal-section vertical-scroll-panel bg-neutral-50/50" id="page-testimonials">
+            <div class="min-h-full pt-20 pb-32 px-6 lg:px-20 max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-lightGreen text-brand-darkGreen text-xs font-bold uppercase tracking-wider mb-4">
+                        <i class="fa-solid fa-comments"></i> Doctor Stories
+                    </div>
+                    <h2 class="text-4xl sm:text-5xl font-extrabold text-brand-dark tracking-tight mb-4">Trusted by Leading Physicians</h2>
+                    <p class="text-brand-grayText text-base sm:text-lg">Real feedback from doctors and clinic directors whose practices were transformed by Marketing Medicine.</p>
+                </div>
+
+                <!-- Messaging-App Style Testimonials Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <!-- Testimonial 1 -->
+                    <div class="glass-card p-6 rounded-[24px] shadow-lg border border-brand-border flex flex-col justify-between relative">
+                        <div class="flex items-start gap-4 mb-4">
+                            <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=100&auto=format&fit=crop&q=80" alt="Dr. Aris Vance" class="w-14 h-14 rounded-full object-cover border-2 border-brand-green shadow-md" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h4 class="font-bold text-brand-dark text-base">Dr. Aris Vance, MD</h4>
+                                    <span class="bg-brand-lightGreen text-brand-darkGreen text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"><i class="fa-solid fa-check"></i> Verified</span>
+                                </div>
+                                <p class="text-xs text-brand-grayText">Chief Surgeon, Metro Cardiology Institute</p>
+                                <div class="text-amber-400 text-xs mt-1">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-brand-mint/50 p-4 rounded-2xl text-sm text-brand-dark font-medium relative ml-6 border border-brand-green/20">
+                            <div class="absolute -top-2 left-6 w-4 h-4 bg-brand-mint transform rotate-45 border-l border-t border-brand-green/20"></div>
+                            "Marketing Medicine transformed our digital presence completely. Patient inquiries have increased every single month without fail. Their team understands medical ethics and compliance better than anyone else."
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="glass-card p-6 rounded-[24px] shadow-lg border border-brand-border flex flex-col justify-between relative">
+                        <div class="flex items-start gap-4 mb-4">
+                            <img src="https://images.unsplash.com/photo-1594824813578-8316c0245a16?w=100&auto=format&fit=crop&q=80" alt="Dr. Elena Rostova" class="w-14 h-14 rounded-full object-cover border-2 border-brand-green shadow-md" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h4 class="font-bold text-brand-dark text-base">Dr. Elena Rostova, DDS</h4>
+                                    <span class="bg-brand-lightGreen text-brand-darkGreen text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"><i class="fa-solid fa-check"></i> Verified</span>
+                                </div>
+                                <p class="text-xs text-brand-grayText">Founder, Apex Aesthetic Dental Studio</p>
+                                <div class="text-amber-400 text-xs mt-1">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-brand-mint/50 p-4 rounded-2xl text-sm text-brand-dark font-medium relative ml-6 border border-brand-green/20">
+                            <div class="absolute -top-2 left-6 w-4 h-4 bg-brand-mint transform rotate-45 border-l border-t border-brand-green/20"></div>
+                            "Our cosmetic dental bookings for high-ticket implants tripled in 90 days. The Growth Dose package is easily the best ROI our practice has ever experienced. Absolute professionals."
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="glass-card p-6 rounded-[24px] shadow-lg border border-brand-border flex flex-col justify-between relative">
+                        <div class="flex items-start gap-4 mb-4">
+                            <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=100&auto=format&fit=crop&q=80" alt="Dr. Marcus Thorne" class="w-14 h-14 rounded-full object-cover border-2 border-brand-green shadow-md" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h4 class="font-bold text-brand-dark text-base">Dr. Marcus Thorne, Orthopedic Surgeon</h4>
+                                    <span class="bg-brand-lightGreen text-brand-darkGreen text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"><i class="fa-solid fa-check"></i> Verified</span>
+                                </div>
+                                <p class="text-xs text-brand-grayText">Director, Spine & Joint Care Clinic</p>
+                                <div class="text-amber-400 text-xs mt-1">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-brand-mint/50 p-4 rounded-2xl text-sm text-brand-dark font-medium relative ml-6 border border-brand-green/20">
+                            <div class="absolute -top-2 left-6 w-4 h-4 bg-brand-mint transform rotate-45 border-l border-t border-brand-green/20"></div>
+                            "They built us an incredible online authority. Patients now come to us already trusting our expertise because of the educational content Marketing Medicine produced."
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 4 -->
+                    <div class="glass-card p-6 rounded-[24px] shadow-lg border border-brand-border flex flex-col justify-between relative">
+                        <div class="flex items-start gap-4 mb-4">
+                            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&auto=format&fit=crop&q=80" alt="Dr. Sarah Jenkins" class="w-14 h-14 rounded-full object-cover border-2 border-brand-green shadow-md" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h4 class="font-bold text-brand-dark text-base">Dr. Sarah Jenkins, Pediatrician</h4>
+                                    <span class="bg-brand-lightGreen text-brand-darkGreen text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"><i class="fa-solid fa-check"></i> Verified</span>
+                                </div>
+                                <p class="text-xs text-brand-grayText">Head of Pediatrics, Children's Wellness Hub</p>
+                                <div class="text-amber-400 text-xs mt-1">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-brand-mint/50 p-4 rounded-2xl text-sm text-brand-dark font-medium relative ml-6 border border-brand-green/20">
+                            <div class="absolute -top-2 left-6 w-4 h-4 bg-brand-mint transform rotate-45 border-l border-t border-brand-green/20"></div>
+                            "The responsiveness and deep medical insight of their team is unmatched. They feel like an in-house department rather than an external agency."
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= PAGE 5: ACHIEVEMENTS ================= -->
+        <section class="horizontal-section vertical-scroll-panel" id="page-achievements">
+            <div class="min-h-full pt-20 pb-32 px-6 lg:px-20 max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-mint text-brand-darkGreen text-xs font-bold uppercase tracking-wider mb-4">
+                        <i class="fa-solid fa-trophy"></i> Proven Track Record
+                    </div>
+                    <h2 class="text-4xl sm:text-5xl font-extrabold text-brand-dark tracking-tight mb-4">Building Trust Through Results</h2>
+                    <p class="text-brand-grayText text-base sm:text-lg">Milestones, hospital partnerships, and case studies defining our industry leadership.</p>
+                </div>
+
+                <!-- Big Counters Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
+                    <div class="p-8 rounded-[24px] bg-neutral-50 border border-brand-border text-center">
+                        <div class="text-4xl lg:text-5xl font-extrabold text-brand-green mb-2 font-mono">40+</div>
+                        <h4 class="font-bold text-brand-dark text-base mb-1">Partnered Doctors</h4>
+                        <p class="text-xs text-brand-grayText">Leading medical specialists across 12 states.</p>
+                    </div>
+                    <div class="p-8 rounded-[24px] bg-neutral-50 border border-brand-border text-center">
+                        <div class="text-4xl lg:text-5xl font-extrabold text-brand-green mb-2 font-mono">100+</div>
+                        <h4 class="font-bold text-brand-dark text-base mb-1">Projects Completed</h4>
+                        <p class="text-xs text-brand-grayText">High-converting medical websites & funnels.</p>
+                    </div>
+                    <div class="p-8 rounded-[24px] bg-neutral-50 border border-brand-border text-center">
+                        <div class="text-4xl lg:text-5xl font-extrabold text-brand-green mb-2 font-mono">2.4M</div>
+                        <h4 class="font-bold text-brand-dark text-base mb-1">Patient Reach</h4>
+                        <p class="text-xs text-brand-grayText">Monthly organic impressions & education.</p>
+                    </div>
+                    <div class="p-8 rounded-[24px] bg-neutral-50 border border-brand-border text-center">
+                        <div class="text-4xl lg:text-5xl font-extrabold text-brand-green mb-2 font-mono">15+</div>
+                        <h4 class="font-bold text-brand-dark text-base mb-1">Hospital Partnerships</h4>
+                        <p class="text-xs text-brand-grayText">Enterprise healthcare networks.</p>
+                    </div>
+                </div>
+
+                <!-- Interactive Timeline Section -->
+                <div class="bg-neutral-50 p-8 rounded-[32px] border border-brand-border mb-16">
+                    <h3 class="text-2xl font-extrabold text-brand-dark mb-8 text-center">Our Evolutionary Journey</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+                        <div class="p-6 bg-white rounded-2xl shadow-sm border border-brand-border">
+                            <span class="text-brand-green font-mono font-bold text-sm block mb-2">2022</span>
+                            <h4 class="font-bold text-brand-dark text-base mb-1">Founded</h4>
+                            <p class="text-xs text-brand-grayText">Started by physicians and digital marketers in Boston.</p>
+                        </div>
+                        <div class="p-6 bg-white rounded-2xl shadow-sm border border-brand-border">
+                            <span class="text-brand-green font-mono font-bold text-sm block mb-2">2023</span>
+                            <h4 class="font-bold text-brand-dark text-base mb-1">40+ Doctors</h4>
+                            <p class="text-xs text-brand-grayText">Reached milestone of 40 active clinic partnerships.</p>
+                        </div>
+                        <div class="p-6 bg-white rounded-2xl shadow-sm border border-brand-border">
+                            <span class="text-brand-green font-mono font-bold text-sm block mb-2">2024</span>
+                            <h4 class="font-bold text-brand-dark text-base mb-1">Hospital Expansion</h4>
+                            <p class="text-xs text-brand-grayText">Launched enterprise solutions for regional medical groups.</p>
+                        </div>
+                        <div class="p-6 bg-white rounded-2xl shadow-sm border border-brand-border">
+                            <span class="text-brand-green font-mono font-bold text-sm block mb-2">2025-2026</span>
+                            <h4 class="font-bold text-brand-dark text-base mb-1">Healthcare Agency #1</h4>
+                            <p class="text-xs text-brand-grayText">Recognized as the premier clinical marketing agency.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= PAGE 6: CONTACT ================= -->
+        <section class="horizontal-section vertical-scroll-panel bg-neutral-50/50" id="page-contact">
+            <div class="min-h-full pt-20 pb-40 px-6 lg:px-20 max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-lightGreen text-brand-darkGreen text-xs font-bold uppercase tracking-wider mb-4">
+                        <i class="fa-solid fa-paper-plane"></i> Get in Touch
+                    </div>
+                    <h2 class="text-4xl sm:text-5xl font-extrabold text-brand-dark tracking-tight mb-4">Let's Grow Your Practice</h2>
+                    <p class="text-brand-grayText text-base sm:text-lg">Schedule a consultation with our medical growth strategists today.</p>
+                </div>
+
+                <!-- Two Column Contact Layout -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
+                    
+                    <!-- Left: Contact Details -->
+                    <div class="lg:col-span-5 glass-card p-8 rounded-[32px] border border-brand-border flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-2xl font-extrabold text-brand-dark mb-6">Contact Information</h3>
+                            <p class="text-sm text-brand-grayText mb-8 leading-relaxed">Ready to dominate patient search results and build lasting clinical authority? Reach out to our team directly.</p>
+                            
+                            <div class="space-y-6 mb-8">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 rounded-xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center shrink-0">
+                                        <i class="fa-solid fa-phone"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-brand-grayText uppercase font-semibold">Phone</div>
+                                        <div class="text-sm font-bold text-brand-dark">+1 (800) 555-MEDS</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 rounded-xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center shrink-0">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-brand-grayText uppercase font-semibold">Email</div>
+                                        <div class="text-sm font-bold text-brand-dark">care@marketingmedicine.com</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 rounded-xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center shrink-0">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-brand-grayText uppercase font-semibold">Office Address</div>
+                                        <div class="text-sm font-bold text-brand-dark">100 Healthcare Way, Suite 400, Boston, MA</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 rounded-xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center shrink-0">
+                                        <i class="fa-solid fa-clock"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-brand-grayText uppercase font-semibold">Business Hours</div>
+                                        <div class="text-sm font-bold text-brand-dark">Mon - Fri: 8:00 AM - 6:00 PM EST</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social Links -->
+                        <div class="pt-6 border-t border-brand-border flex items-center gap-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-neutral-100 hover:bg-brand-green hover:text-white flex items-center justify-center text-brand-dark transition-all duration-300"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-neutral-100 hover:bg-brand-green hover:text-white flex items-center justify-center text-brand-dark transition-all duration-300"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-neutral-100 hover:bg-brand-green hover:text-white flex items-center justify-center text-brand-dark transition-all duration-300"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-neutral-100 hover:bg-brand-green hover:text-white flex items-center justify-center text-brand-dark transition-all duration-300"><i class="fa-brands fa-youtube"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Right: Modern Contact Form -->
+                    <div class="lg:col-span-7 glass-card p-8 sm:p-10 rounded-[32px] border border-brand-border shadow-xl">
+                        <h3 class="text-2xl font-extrabold text-brand-dark mb-6">Book Your Strategy Session</h3>
+                        
+                        <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-grayText mb-2">Full Name *</label>
+                                    <input type="text" required class="w-full px-4 py-3.5 rounded-xl bg-neutral-50 border border-brand-border text-brand-dark focus:outline-none focus:border-brand-green transition-colors" placeholder="Dr. Jane Doe">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-grayText mb-2">Clinic / Hospital Name *</label>
+                                    <input type="text" required class="w-full px-4 py-3.5 rounded-xl bg-neutral-50 border border-brand-border text-brand-dark focus:outline-none focus:border-brand-green transition-colors" placeholder="Advanced Medical Center">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-grayText mb-2">Phone Number *</label>
+                                    <input type="tel" required class="w-full px-4 py-3.5 rounded-xl bg-neutral-50 border border-brand-border text-brand-dark focus:outline-none focus:border-brand-green transition-colors" placeholder="+91 98765 43210">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-grayText mb-2">Email Address *</label>
+                                    <input type="email" required class="w-full px-4 py-3.5 rounded-xl bg-neutral-50 border border-brand-border text-brand-dark focus:outline-none focus:border-brand-green transition-colors" placeholder="doctor@clinic.com">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-brand-grayText mb-2">Message / Practice Goals</label>
+                                <textarea rows="4" class="w-full px-4 py-3.5 rounded-xl bg-neutral-50 border border-brand-border text-brand-dark focus:outline-none focus:border-brand-green transition-colors" placeholder="Tell us about your practice and growth goals..."></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-brand-green to-brand-darkGreen text-white font-bold text-base shadow-lg shadow-brand-green/30 hover:shadow-brand-green/50 transition-all duration-300">
+                                Submit Consultation Request
+                            </button>
+                        </form>
+                        
+                        <div id="form-success-message" class="hidden mt-6 p-4 rounded-xl bg-brand-lightGreen text-brand-darkGreen text-center font-bold text-sm">
+                            <i class="fa-solid fa-circle-check text-lg mr-2"></i> Thank you! Our medical growth director will contact you within 2 hours.
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Frequently Asked Questions (Accordion) -->
+                <div class="mb-16">
+                    <h3 class="text-3xl font-extrabold text-brand-dark text-center mb-8">Frequently Asked Questions</h3>
+                    <div class="max-w-3xl mx-auto space-y-4">
+                        
+                        <div class="glass-card rounded-2xl border border-brand-border overflow-hidden">
+                            <button onclick="toggleAccordion(this)" class="w-full p-6 text-left font-bold text-brand-dark flex justify-between items-center">
+                                <span>How is Marketing Medicine different from regular marketing agencies?</span>
+                                <i class="fa-solid fa-chevron-down text-brand-green transition-transform"></i>
+                            </button>
+                            <div class="hidden px-6 pb-6 text-sm text-brand-grayText leading-relaxed">
+                                We are founded by medical professionals and digital marketing experts. We strictly adhere to medical ethics, patient privacy, and compliance guidelines while delivering high-converting patient acquisition campaigns.
+                            </div>
+                        </div>
+
+                        <div class="glass-card rounded-2xl border border-brand-border overflow-hidden">
+                            <button onclick="toggleAccordion(this)" class="w-full p-6 text-left font-bold text-brand-dark flex justify-between items-center">
+                                <span>How long does it take to see an increase in patient bookings?</span>
+                                <i class="fa-solid fa-chevron-down text-brand-green transition-transform"></i>
+                            </button>
+                            <div class="hidden px-6 pb-6 text-sm text-brand-grayText leading-relaxed">
+                                Most clinics experience a noticeable surge in inbound patient inquiries within the first 30 to 45 days as local SEO and targeted patient ads take effect.
+                            </div>
+                        </div>
+
+                        <div class="glass-card rounded-2xl border border-brand-border overflow-hidden">
+                            <button onclick="toggleAccordion(this)" class="w-full p-6 text-left font-bold text-brand-dark flex justify-between items-center">
+                                <span>Are your digital campaigns HIPAA compliant?</span>
+                                <i class="fa-solid fa-chevron-down text-brand-green transition-transform"></i>
+                            </button>
+                            <div class="hidden px-6 pb-6 text-sm text-brand-grayText leading-relaxed">
+                                Absolutely. All patient data capture forms, CRM integrations, and ad funnels are built with rigorous HIPAA compliance standards to protect patient confidentiality.
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Footer Copyright & Info -->
+                <footer class="pt-8 text-center text-brand-grayText text-xs">
+                    <p>© 2026 Marketing Medicine Inc. All rights reserved. Precision Healthcare Digital Marketing.</p>
+                </footer>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Floating Menu Dock at Bottom -->
+    <div class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
+        <nav class="menu-dock px-3 py-2.5 rounded-full flex items-center gap-2 sm:gap-3 shadow-2xl">
+            <!-- Brand Logo Icon in Dock -->
+            <button onclick="goToSlide(0)" class="dock-item h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-neutral-900 flex items-center justify-center shadow-md mr-1 p-1.5 hover:bg-black transition-colors" title="Marketing Medicine Home">
+                <img src="assets/TCS@Logo-04.png" alt="Marketing Medicine Logo" class="h-full w-full object-contain filter drop-shadow">
+            </button>
+            <div class="h-6 w-[1px] bg-neutral-200 mx-0.5"></div>
+            
+            <button onclick="goToSlide(0)" class="dock-item nav-btn px-3 py-2 rounded-full text-xs font-bold text-brand-dark hover:bg-neutral-100 flex items-center gap-1.5" data-index="0">
+                <i class="fa-solid fa-house text-brand-green text-xs"></i>
+                <span class="hidden sm:inline">Home</span>
+            </button>
+            <button onclick="goToSlide(1)" class="dock-item nav-btn px-3 py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="1">
+                <i class="fa-solid fa-prescription-bottle-medical text-xs"></i>
+                <span class="hidden sm:inline">Plans</span>
+            </button>
+            <button onclick="goToSlide(2)" class="dock-item nav-btn px-3 py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="2">
+                <i class="fa-solid fa-dna text-xs"></i>
+                <span class="hidden sm:inline">About</span>
+            </button>
+            <button onclick="goToSlide(3)" class="dock-item nav-btn px-3 py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="3">
+                <i class="fa-solid fa-comments text-xs"></i>
+                <span class="hidden sm:inline">Stories</span>
+            </button>
+            <button onclick="goToSlide(4)" class="dock-item nav-btn px-3 py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="4">
+                <i class="fa-solid fa-trophy text-xs"></i>
+                <span class="hidden sm:inline">Results</span>
+            </button>
+            <button onclick="goToSlide(5)" class="dock-item nav-btn px-3 py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="5">
+                <i class="fa-solid fa-paper-plane text-xs"></i>
+                <span class="hidden sm:inline">Contact</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Global variables for horizontal navigation
+        let currentSlide = 0;
+        const totalSlides = 6;
+        const wrapper = document.getElementById('horizontal-wrapper');
+        const progressBar = document.getElementById('horizontal-progress');
+        const navBtns = document.querySelectorAll('.nav-btn');
+
+        // Loading Screen Animation
+        window.addEventListener('load', () => {
+            const loaderBar = document.getElementById('loader-bar');
+            loaderBar.style.width = '100%';
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                setTimeout(() => loader.remove(), 700);
+            }, 500);
+        });
+
+        // Custom Cursor Movement
+        const cursor = document.querySelector('.custom-cursor');
+        const cursorDot = document.querySelector('.custom-cursor-dot');
+        
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.top = e.clientY + 'px';
+            cursor.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+            cursorDot.style.left = e.clientX + 'px';
+        });
+
+        // Horizontal Slide Navigation Function
+        function goToSlide(index) {
+            if (index < 0) index = 0;
+            if (index >= totalSlides) index = totalSlides - 1;
+            currentSlide = index;
+
+            // Translate wrapper horizontally
+            wrapper.style.transform = `translateX(-${currentSlide * 100}vw)`;
+            wrapper.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+
+            // Update progress bar width
+            const progressPercent = ((currentSlide + 1) / totalSlides) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+
+            // Update active dock button styling
+            navBtns.forEach((btn, idx) => {
+                if (idx === currentSlide) {
+                    btn.classList.add('text-brand-dark', 'font-bold', 'bg-neutral-100');
+                    btn.classList.remove('text-brand-grayText', 'font-semibold');
+                    const icon = btn.querySelector('i');
+                    if (icon) icon.classList.add('text-brand-green');
+                } else {
+                    btn.classList.remove('text-brand-dark', 'font-bold', 'bg-neutral-100');
+                    btn.classList.add('text-brand-grayText', 'font-semibold');
+                }
+            });
+
+            // Scroll active section back to top
+            const activeSection = document.querySelectorAll('.horizontal-section')[currentSlide];
+            if (activeSection) {
+                activeSection.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Wheel / Trackpad Horizontal Transition at Bottom of Sections
+        const sections = document.querySelectorAll('.horizontal-section');
+        
+        sections.forEach((section, index) => {
+            section.addEventListener('wheel', (e) => {
+                const isAtBottom = section.scrollTop + section.clientHeight >= section.scrollHeight - 5;
+                const isAtTop = section.scrollTop <= 5;
+
+                if (e.deltaY > 30 && isAtBottom && index < totalSlides - 1) {
+                    e.preventDefault();
+                    goToSlide(index + 1);
+                } else if (e.deltaY < -30 && isAtTop && index > 0) {
+                    e.preventDefault();
+                    goToSlide(index - 1);
+                }
+            }, { passive: false });
+        });
+
+        // Keyboard Navigation Support
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                if (currentSlide < totalSlides - 1) {
+                    goToSlide(currentSlide + 1);
+                }
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                if (currentSlide > 0) {
+                    goToSlide(currentSlide - 1);
+                }
+            }
+        });
+
+        // Touch Swipe Support for Mobile & Tablets
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        window.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        window.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipeGesture();
+        }, false);
+
+        function handleSwipeGesture() {
+            const threshold = 60;
+            if (touchEndX < touchStartX - threshold) {
+                // Swiped Left -> Next Slide
+                if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1);
+            }
+            if (touchEndX > touchStartX + threshold) {
+                // Swiped Right -> Previous Slide
+                if (currentSlide > 0) goToSlide(currentSlide - 1);
+            }
+        }
+
+        // FAQ Accordion Toggle
+        function toggleAccordion(btn) {
+            const content = btn.nextElementSibling;
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                btn.querySelector('.fa-chevron-down').style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                btn.querySelector('.fa-chevron-down').style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Contact Form Submission Handler
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const form = document.getElementById('contact-form');
+            const successMsg = document.getElementById('form-success-message');
+            
+            form.style.display = 'none';
+            successMsg.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
