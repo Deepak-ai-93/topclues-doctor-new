@@ -104,20 +104,32 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
         }
 
-        /* Horizontal Container layout */
+        /* Horizontal Container layout & Mobile Responsiveness */
         #horizontal-wrapper {
             display: flex;
             width: 600vw;
-            height: 100vh;
+            height: calc(100vh - 60px);
             flex-wrap: nowrap;
             position: relative;
         }
         .horizontal-section {
             width: 100vw;
-            height: 100vh;
+            height: calc(100vh - 60px);
             flex-shrink: 0;
             overflow-y: auto;
             position: relative;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Mobile specific layout tweaks */
+        @media (max-width: 768px) {
+            #horizontal-wrapper {
+                height: calc(100dvh - 60px);
+            }
+            .horizontal-section {
+                height: calc(100dvh - 60px);
+                padding-bottom: 90px;
+            }
         }
 
         /* Floating Blob Animations */
@@ -195,28 +207,28 @@
 
         <!-- ================= PAGE 1: HOME ================= -->
         <section class="horizontal-section vertical-scroll-panel" id="page-home">
-            <div class="min-h-full pt-16 pb-32 px-6 lg:px-20 max-w-7xl mx-auto flex flex-col justify-between">
+            <div class="min-h-full pt-4 sm:pt-10 pb-28 sm:pb-32 px-4 sm:px-8 lg:px-20 max-w-7xl mx-auto flex flex-col justify-between">
                 
                 <!-- Hero Content -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center my-auto py-12">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center my-auto py-6 sm:py-12">
                     <div class="lg:col-span-7">
-                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-mint text-brand-darkGreen text-xs font-bold uppercase tracking-wider mb-6 shadow-sm">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-brand-mint text-brand-darkGreen text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-4 sm:mb-6 shadow-sm">
                             <i class="fa-solid fa-shield-heart"></i> Precision Medical Marketing
                         </div>
-                        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-brand-dark leading-[1.08] mb-6">
-                            From Consultation Room <br>
+                        <h1 class="text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight text-brand-dark leading-[1.12] mb-4 sm:mb-6">
+                            From Consultation Room <br class="hidden sm:inline">
                             <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-green to-brand-darkGreen">to DIGITAL ROOM</span>
                         </h1>
-                        <p class="text-lg sm:text-xl text-brand-grayText font-normal mb-8 max-w-xl leading-relaxed">
+                        <p class="text-base sm:text-xl text-brand-grayText font-normal mb-6 sm:mb-8 max-w-xl leading-relaxed">
                             We Diagnose. We Prescribe. We Grow Your Practice. Elevating world-class doctors and elite hospitals through high-converting digital ecosystems.
                         </p>
                         
-                        <div class="flex flex-wrap items-center gap-4">
-                            <button onclick="goToSlide(1)" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-green to-brand-darkGreen text-white font-bold text-base shadow-xl shadow-brand-green/30 hover:shadow-brand-green/50 transition-all duration-300 flex items-center gap-3 group">
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+                            <button onclick="goToSlide(1)" class="px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-brand-green to-brand-darkGreen text-white font-bold text-sm sm:text-base shadow-xl shadow-brand-green/30 hover:shadow-brand-green/50 transition-all duration-300 flex items-center justify-center gap-3 group">
                                 <span>Explore Digital Doses</span>
                                 <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                             </button>
-                            <button onclick="goToSlide(5)" class="px-8 py-4 rounded-2xl bg-white border border-brand-border text-brand-dark font-bold text-base hover:bg-neutral-50 shadow-sm transition-all duration-300">
+                            <button onclick="goToSlide(5)" class="px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-white border border-brand-border text-brand-dark font-bold text-sm sm:text-base hover:bg-neutral-50 shadow-sm transition-all duration-300 text-center">
                                 Book Consultation
                             </button>
                         </div>
@@ -867,35 +879,35 @@
     </div>
 
     <!-- Floating Menu Dock at Bottom -->
-    <div class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
-        <nav class="menu-dock px-3 py-2.5 rounded-full flex items-center gap-2 sm:gap-3 shadow-2xl">
+    <div class="fixed bottom-3 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-50 w-[95%] sm:w-auto max-w-lg sm:max-w-none">
+        <nav class="menu-dock px-2 sm:px-3 py-2 sm:py-2.5 rounded-full flex items-center justify-between sm:justify-start gap-1 sm:gap-3 shadow-2xl">
             <!-- Brand Logo Icon in Dock -->
-            <button onclick="goToSlide(0)" class="dock-item h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-neutral-900 flex items-center justify-center shadow-md mr-1 p-1.5 hover:bg-black transition-colors" title="Marketing Medicine Home">
+            <button onclick="goToSlide(0)" class="dock-item h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-neutral-900 flex items-center justify-center shadow-md p-1 sm:p-1.5 hover:bg-black transition-colors flex-shrink-0" title="Marketing Medicine Home">
                 <img src="assets/TCS@Logo-01.png" alt="Marketing Medicine Logo" class="h-full w-full object-contain filter drop-shadow">
             </button>
-            <div class="h-6 w-[1px] bg-neutral-200 mx-0.5"></div>
+            <div class="h-5 sm:h-6 w-[1px] bg-neutral-200"></div>
             
-            <button onclick="goToSlide(0)" class="dock-item nav-btn px-3 py-2 rounded-full text-xs font-bold text-brand-dark hover:bg-neutral-100 flex items-center gap-1.5" data-index="0">
+            <button onclick="goToSlide(0)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-bold text-brand-dark hover:bg-neutral-100 flex items-center gap-1.5" data-index="0">
                 <i class="fa-solid fa-house text-brand-green text-xs"></i>
                 <span class="hidden sm:inline">Home</span>
             </button>
-            <button onclick="goToSlide(1)" class="dock-item nav-btn px-3 py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="1">
+            <button onclick="goToSlide(1)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="1">
                 <i class="fa-solid fa-prescription-bottle-medical text-xs"></i>
                 <span class="hidden sm:inline">Plans</span>
             </button>
-            <button onclick="goToSlide(2)" class="dock-item nav-btn px-3 py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="2">
+            <button onclick="goToSlide(2)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="2">
                 <i class="fa-solid fa-dna text-xs"></i>
                 <span class="hidden sm:inline">About</span>
             </button>
-            <button onclick="goToSlide(3)" class="dock-item nav-btn px-3 py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="3">
+            <button onclick="goToSlide(3)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="3">
                 <i class="fa-solid fa-comments text-xs"></i>
                 <span class="hidden sm:inline">Stories</span>
             </button>
-            <button onclick="goToSlide(4)" class="dock-item nav-btn px-3 py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="4">
+            <button onclick="goToSlide(4)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="4">
                 <i class="fa-solid fa-trophy text-xs"></i>
                 <span class="hidden sm:inline">Results</span>
             </button>
-            <button onclick="goToSlide(5)" class="dock-item nav-btn px-3 py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="5">
+            <button onclick="goToSlide(5)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="5">
                 <i class="fa-solid fa-paper-plane text-xs"></i>
                 <span class="hidden sm:inline">Contact</span>
             </button>
