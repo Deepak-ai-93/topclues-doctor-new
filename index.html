@@ -98,7 +98,7 @@
         @media (max-width: 768px) {
             :root { --header-h: 66px; }
             #horizontal-wrapper, .horizontal-section {
-                height: calc(100dvh - 66px);
+                height: calc(100dvh - var(--header-h, 66px));
             }
         }
         @media (min-width: 769px) and (max-width: 1023px) {
