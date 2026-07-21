@@ -183,14 +183,14 @@
         </div>
     </div>
 
-    <!-- Fixed Top Navigation Bar with Responsive Logo -->
-    <header class="fixed top-0 left-0 w-full z-40 bg-white/90 backdrop-blur-md border-b border-neutral-200/80 px-4 sm:px-8 py-3 transition-all duration-300">
+    <!-- Fixed Top Navigation Bar with Responsive Large Logo -->
+    <header class="fixed top-0 left-0 w-full z-40 bg-white/95 backdrop-blur-md border-b border-neutral-200/80 px-4 sm:px-8 py-2.5 sm:py-3.5 transition-all duration-300">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <a href="#" onclick="goToSlide(0); return false;" class="flex items-center gap-3 group focus:outline-none" title="Marketing Medicine Home">
-                <img src="assets/TCS@Logo-01.png" alt="Marketing Medicine Logo" class="h-9 sm:h-11 md:h-14 w-auto max-w-[170px] sm:max-w-[240px] md:max-w-[280px] object-contain transition-transform duration-300 group-hover:scale-[1.03]">
+                <img src="assets/TCS@Logo-01.png" alt="Marketing Medicine Logo" class="h-10 sm:h-14 md:h-16 lg:h-20 w-auto max-w-[200px] sm:max-w-[300px] md:max-w-[360px] lg:max-w-[420px] object-contain transition-transform duration-300 group-hover:scale-[1.02]">
             </a>
             <div class="flex items-center gap-3">
-                <button onclick="goToSlide(5)" class="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-gradient-to-r from-brand-green to-brand-darkGreen text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all duration-300">
+                <button onclick="goToSlide(5)" class="px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r from-brand-green to-brand-darkGreen text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all duration-300">
                     Book Consultation
                 </button>
             </div>
@@ -198,12 +198,12 @@
     </header>
 
     <!-- Horizontal Navigation Progress Bar -->
-    <div class="fixed top-[57px] sm:top-[65px] md:top-[73px] left-0 w-full h-1 bg-neutral-100 z-40">
+    <div class="fixed top-[60px] sm:top-[75px] md:top-[85px] lg:top-[95px] left-0 w-full h-1 bg-neutral-100 z-40">
         <div id="horizontal-progress" class="h-full bg-brand-green transition-all duration-300" style="width: 16.66%;"></div>
     </div>
 
     <!-- HORIZONTAL WRAPPER CONTAINER -->
-    <div id="horizontal-wrapper" class="pt-[60px] sm:pt-[68px] md:pt-[76px]">
+    <div id="horizontal-wrapper" class="pt-[64px] sm:pt-[80px] md:pt-[90px] lg:pt-[100px]">
 
         <!-- ================= PAGE 1: HOME ================= -->
         <section class="horizontal-section vertical-scroll-panel" id="page-home">
@@ -327,133 +327,135 @@
 
             </div>
         </section>
-
         <!-- ================= PAGE 2: PLANS ================= -->
         <section class="horizontal-section vertical-scroll-panel bg-neutral-50/50" id="page-plans">
-            <div class="min-h-full pt-20 pb-32 px-6 lg:px-20 max-w-7xl mx-auto">
-                <div class="text-center max-w-2xl mx-auto mb-16">
+            <div class="min-h-full pt-16 sm:pt-20 pb-32 px-4 sm:px-8 lg:px-20 max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
                     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-lightGreen text-brand-darkGreen text-xs font-bold uppercase tracking-wider mb-4">
                         <i class="fa-solid fa-prescription-bottle-medical"></i> Clinical Prescriptions
                     </div>
-                    <h2 class="text-4xl sm:text-5xl font-extrabold text-brand-dark tracking-tight mb-4">Our Digital Doses</h2>
-                    <p class="text-brand-grayText text-base sm:text-lg">Tailored marketing prescriptions designed for solo practices, multi-specialty clinics, and large hospital networks.</p>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-brand-dark tracking-tight mb-4">Our Digital Doses</h2>
+                    <p class="text-brand-grayText text-sm sm:text-lg">Tailored marketing prescriptions designed for solo practices, specialized clinics, and growing medical centers.</p>
                 </div>
 
-                <!-- Plans Grid / Cards Carousel -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Plans Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
                     
                     <!-- Plan 1: Starter Dose -->
-                    <div class="glass-card rounded-[28px] p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between border border-brand-border relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-brand-lightGreen rounded-bl-full opacity-50 z-0"></div>
+                    <div class="glass-card rounded-[28px] p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between border border-brand-border relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-28 h-28 bg-brand-lightGreen rounded-bl-full opacity-40 z-0"></div>
                         <div class="relative z-10">
-                            <div class="w-14 h-14 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-2xl mb-6 shadow-inner">
+                            <div class="w-12 h-12 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-xl mb-4 shadow-inner">
                                 <i class="fa-solid fa-seedling"></i>
                             </div>
-                            <h3 class="text-2xl font-extrabold text-brand-dark mb-2">Starter Dose</h3>
-                            <p class="text-xs text-brand-grayText mb-6">For emerging solo practitioners looking to establish a credible online identity.</p>
+                            <h3 class="text-xl sm:text-2xl font-extrabold text-brand-dark mb-1">Starter Dose</h3>
+                            <p class="text-xs text-brand-grayText mb-6">Essential social presence & Meta ads reach for doctors.</p>
                             
-                            <div class="space-y-3 mb-8 text-sm text-brand-dark font-medium">
-                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Google Business Profile Setup</div>
-                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> 4 Social Media Posts /mo</div>
-                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Basic SEO Optimization</div>
-                                <div class="flex items-center gap-3 text-neutral-400"><i class="fa-solid fa-xmark text-neutral-300"></i> Paid Patient Ads</div>
+                            <div class="space-y-2.5 mb-6 text-xs sm:text-sm text-brand-dark font-medium">
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>10 Creative Posts</span></div>
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>1 Animated Reel with Voiceover</span></div>
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>Regular posting on all social media handles</span></div>
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>Meta Ads for Reach</span></div>
+                                <div class="flex items-start gap-2.5 text-neutral-400 italic text-[11px]"><i class="fa-solid fa-circle-info mt-0.5"></i> <span>PPC Budget excluded</span></div>
                             </div>
                         </div>
 
-                        <div class="relative z-10 pt-6 border-t border-brand-border">
-                            <div class="text-xs text-brand-grayText uppercase font-semibold">Investment</div>
-                            <div class="text-3xl font-extrabold text-brand-dark mb-4">₹1,15,000<span class="text-sm font-normal text-brand-grayText">/mo</span></div>
-                            <button onclick="goToSlide(5)" class="w-full py-3 rounded-xl bg-neutral-100 hover:bg-brand-green hover:text-white font-bold text-sm text-brand-dark transition-all duration-300">
+                        <div class="relative z-10 pt-4 border-t border-brand-border">
+                            <div class="text-[10px] text-brand-grayText uppercase font-semibold">Monthly Investment</div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-brand-dark mb-4">₹10,000 <span class="text-xs font-semibold text-brand-grayText">+ GST/mo</span></div>
+                            <button onclick="goToSlide(5)" class="w-full py-3 rounded-xl bg-neutral-100 hover:bg-brand-green hover:text-white font-bold text-xs sm:text-sm text-brand-dark transition-all duration-300">
                                 Select Starter Dose
                             </button>
                         </div>
                     </div>
 
                     <!-- Plan 2: Growth Dose (Featured) -->
-                    <div class="bg-gradient-to-b from-brand-dark to-neutral-900 text-white rounded-[28px] p-8 shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between relative overflow-hidden group border-2 border-brand-green">
+                    <div class="bg-gradient-to-b from-brand-dark to-neutral-900 text-white rounded-[28px] p-6 sm:p-8 shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between relative overflow-hidden group border-2 border-brand-green">
                         <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand-green rounded-full filter blur-3xl opacity-30 z-0"></div>
-                        <div class="absolute top-4 right-4 bg-brand-green text-white text-[10px] uppercase font-extrabold px-3 py-1 rounded-full tracking-widest shadow-md">Most Popular</div>
+                        <div class="absolute top-4 right-4 bg-brand-green text-white text-[9px] sm:text-[10px] uppercase font-extrabold px-2.5 py-1 rounded-full tracking-widest shadow-md">Most Popular</div>
                         
                         <div class="relative z-10">
-                            <div class="w-14 h-14 rounded-2xl bg-brand-green/20 text-brand-green flex items-center justify-center text-2xl mb-6 shadow-inner">
+                            <div class="w-12 h-12 rounded-2xl bg-brand-green/20 text-brand-green flex items-center justify-center text-xl mb-4 shadow-inner">
                                 <i class="fa-solid fa-chart-line"></i>
                             </div>
-                            <h3 class="text-2xl font-extrabold mb-2 text-white">Growth Dose</h3>
-                            <p class="text-xs text-neutral-400 mb-6">For growing clinics wanting consistent monthly patient inquiries and robust local authority.</p>
+                            <h3 class="text-xl sm:text-2xl font-extrabold mb-1 text-white">Growth Dose</h3>
+                            <p class="text-xs text-neutral-400 mb-6">High-converting ad setup & performance management.</p>
                             
-                            <div class="space-y-3 mb-8 text-sm text-neutral-200 font-medium">
-                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Advanced Local SEO & Maps</div>
-                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> 12 High-Impact Social Posts</div>
-                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Google & Meta Patient Ads</div>
-                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Reputation & Review Engine</div>
+                            <div class="space-y-2.5 mb-6 text-xs sm:text-sm text-neutral-200 font-medium">
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>Lead Capturing Ad Campaign Setup</span></div>
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>Ad Creation & Management</span></div>
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>5 Creative Ad Posts</span></div>
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>Result Tracking & Optimization</span></div>
+                                <div class="flex items-start gap-2.5 text-neutral-400 italic text-[11px]"><i class="fa-solid fa-circle-info mt-0.5"></i> <span>PPC Budget excluded</span></div>
                             </div>
                         </div>
 
-                        <div class="relative z-10 pt-6 border-t border-neutral-800">
-                            <div class="text-xs text-neutral-400 uppercase font-semibold">Investment</div>
-                            <div class="text-3xl font-extrabold mb-4 text-white">₹2,55,000<span class="text-sm font-normal text-neutral-400">/mo</span></div>
-                            <button onclick="goToSlide(5)" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-green to-brand-darkGreen text-white font-bold text-sm shadow-lg shadow-brand-green/30 hover:shadow-brand-green/50 transition-all duration-300">
+                        <div class="relative z-10 pt-4 border-t border-neutral-800">
+                            <div class="text-[10px] text-neutral-400 uppercase font-semibold">Monthly Investment</div>
+                            <div class="text-2xl sm:text-3xl font-extrabold mb-4 text-white">₹10,000 <span class="text-xs font-semibold text-neutral-400">+ GST/mo</span></div>
+                            <button onclick="goToSlide(5)" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-green to-brand-darkGreen text-white font-bold text-xs sm:text-sm shadow-lg shadow-brand-green/30 hover:shadow-brand-green/50 transition-all duration-300">
                                 Select Growth Dose
                             </button>
                         </div>
                     </div>
 
-                    <!-- Plan 3: Power Dose -->
-                    <div class="glass-card rounded-[28px] p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between border border-brand-border relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-brand-lightGreen rounded-bl-full opacity-50 z-0"></div>
+                    <!-- Plan 3: Digital Surgery -->
+                    <div class="glass-card rounded-[28px] p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between border border-brand-border relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-28 h-28 bg-brand-lightGreen rounded-bl-full opacity-40 z-0"></div>
                         <div class="relative z-10">
-                            <div class="w-14 h-14 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-2xl mb-6 shadow-inner">
-                                <i class="fa-solid fa-bolt-lightning"></i>
+                            <div class="w-12 h-12 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-xl mb-4 shadow-inner">
+                                <i class="fa-solid fa-laptop-medical"></i>
                             </div>
-                            <h3 class="text-2xl font-extrabold text-brand-dark mb-2">Power Dose</h3>
-                            <p class="text-xs text-brand-grayText mb-6">For multi-specialty clinics dominating regional markets and patient volume.</p>
+                            <h3 class="text-xl sm:text-2xl font-extrabold text-brand-dark mb-1">Digital Surgery</h3>
+                            <p class="text-xs text-brand-grayText mb-6">Complete web ecosystem, analytics & Google Business setup.</p>
                             
-                            <div class="space-y-3 mb-8 text-sm text-brand-dark font-medium">
-                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Omnichannel Patient Funnels</div>
-                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Custom Video Content Creation</div>
-                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Dedicated Growth Strategist</div>
-                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Automated CRM Lead Routing</div>
+                            <div class="space-y-2.5 mb-6 text-xs sm:text-sm text-brand-dark font-medium">
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>Fully Functional Responsive Basic Website</span></div>
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>Online Appointment Booking</span></div>
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>Google Business Profile Setup</span></div>
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>Google Analytics Setup</span></div>
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>Facebook Pixel Setup</span></div>
+                                <div class="flex items-start gap-2.5 text-neutral-400 italic text-[11px]"><i class="fa-solid fa-circle-info mt-0.5"></i> <span>Note: Domain & Hosting excluded</span></div>
                             </div>
                         </div>
 
-                        <div class="relative z-10 pt-6 border-t border-brand-border">
-                            <div class="text-xs text-brand-grayText uppercase font-semibold">Investment</div>
-                            <div class="text-3xl font-extrabold text-brand-dark mb-4">₹4,65,000<span class="text-sm font-normal text-brand-grayText">/mo</span></div>
-                            <button onclick="goToSlide(5)" class="w-full py-3 rounded-xl bg-neutral-100 hover:bg-brand-green hover:text-white font-bold text-sm text-brand-dark transition-all duration-300">
-                                Select Power Dose
+                        <div class="relative z-10 pt-4 border-t border-brand-border">
+                            <div class="text-[10px] text-brand-grayText uppercase font-semibold">One-Time Investment</div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-brand-dark mb-4">₹30,000 <span class="text-xs font-semibold text-brand-grayText">+ GST</span></div>
+                            <button onclick="goToSlide(5)" class="w-full py-3 rounded-xl bg-neutral-100 hover:bg-brand-green hover:text-white font-bold text-xs sm:text-sm text-brand-dark transition-all duration-300">
+                                Select Digital Surgery
                             </button>
                         </div>
                     </div>
 
-                    <!-- Plan 4: Ultimate Dose -->
-                    <div class="glass-card rounded-[28px] p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between border border-brand-border relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-brand-lightGreen rounded-bl-full opacity-50 z-0"></div>
+                    <!-- Plan 4: Premium Visibility Therapy -->
+                    <div class="glass-card rounded-[28px] p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between border border-brand-border relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-28 h-28 bg-brand-lightGreen rounded-bl-full opacity-40 z-0"></div>
                         <div class="relative z-10">
-                            <div class="w-14 h-14 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-2xl mb-6 shadow-inner">
-                                <i class="fa-solid fa-hospital"></i>
+                            <div class="w-12 h-12 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-xl mb-4 shadow-inner">
+                                <i class="fa-solid fa-video"></i>
                             </div>
-                            <h3 class="text-2xl font-extrabold text-brand-dark mb-2">Ultimate Dose</h3>
-                            <p class="text-xs text-brand-grayText mb-6">For hospital networks and enterprise healthcare systems requiring total market dominance.</p>
+                            <h3 class="text-xl sm:text-2xl font-extrabold text-brand-dark mb-1">Premium Visibility</h3>
+                            <p class="text-xs text-brand-grayText mb-6">Full video shooting, animated reels & premium posts.</p>
                             
-                            <div class="space-y-3 mb-8 text-sm text-brand-dark font-medium">
-                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Enterprise National Campaigns</div>
-                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> PR & Medical Journal Authority</div>
-                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> Custom AI Patient Chatbots</div>
-                                <div class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-green"></i> 24/7 Executive Management</div>
+                            <div class="space-y-2.5 mb-6 text-xs sm:text-sm text-brand-dark font-medium">
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>4 Creative Posts/month</span></div>
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>1 Animated Reel with Voiceover</span></div>
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>2 Videos (Shooting, Editing & Posting)</span></div>
+                                <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>Regular posting on all social media handles</span></div>
                             </div>
                         </div>
 
-                        <div class="relative z-10 pt-6 border-t border-brand-border">
-                            <div class="text-xs text-brand-grayText uppercase font-semibold">Investment</div>
-                            <div class="text-3xl font-extrabold text-brand-dark mb-4">Custom<span class="text-sm font-normal text-brand-grayText">/Enterprise</span></div>
-                            <button onclick="goToSlide(5)" class="w-full py-3 rounded-xl bg-neutral-100 hover:bg-brand-green hover:text-white font-bold text-sm text-brand-dark transition-all duration-300">
-                                Request Enterprise
+                        <div class="relative z-10 pt-4 border-t border-brand-border">
+                            <div class="text-[10px] text-brand-grayText uppercase font-semibold">Monthly Investment</div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-brand-dark mb-4">₹15,000 <span class="text-xs font-semibold text-brand-grayText">+ GST/mo</span></div>
+                            <button onclick="goToSlide(5)" class="w-full py-3 rounded-xl bg-neutral-100 hover:bg-brand-green hover:text-white font-bold text-xs sm:text-sm text-brand-dark transition-all duration-300">
+                                Select Premium Therapy
                             </button>
                         </div>
                     </div>
 
                 </div>
-
             </div>
         </section>
 
