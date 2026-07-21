@@ -119,24 +119,8 @@
         .floating-shape-delayed {
             animation: floatSlow 8s ease-in-out infinite 2s;
         }
-        @keyframes logoReveal {
-            0% { opacity: 0; transform: scale(0.6) translateY(20px); }
-            50% { opacity: 1; transform: scale(1.05) translateY(0); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        .loader-logo {
-            animation: logoReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        @keyframes pulseGlow {
-            0%, 100% { filter: drop-shadow(0 0 8px rgba(22,163,74,0.3)); }
-            50% { filter: drop-shadow(0 0 25px rgba(22,163,74,0.6)); }
-        }
-        .loader-logo-glow {
-            animation: pulseGlow 2s ease-in-out infinite 0.8s;
-        }
         @media (prefers-reduced-motion: reduce) {
             .floating-shape, .floating-shape-delayed { animation: none; }
-            .loader-logo, .loader-logo-glow { animation: none; }
             * { scroll-behavior: auto !important; }
         }
 
@@ -207,31 +191,6 @@
     <!-- Custom Cursor Elements (desktop, fine-pointer only via CSS) -->
     <div class="custom-cursor" aria-hidden="true"></div>
     <div class="custom-cursor-dot" aria-hidden="true"></div>
-
-    <!-- Loading Screen -->
-    <div id="loader" class="fixed inset-0 z-[100000] bg-brand-dark text-white flex flex-col items-center justify-center transition-opacity duration-700">
-        <div class="text-center p-6">
-            <img src="assets/TCS@Logo-01.png" alt="Marketing Medicine Logo" class="loader-logo loader-logo-glow h-auto w-auto max-w-[280px] max-h-[200px] mx-auto mb-8 object-contain" onerror="this.style.display='none'; document.getElementById('loader-fallback-text').style.display='block';">
-            <p id="loader-fallback-text" class="hidden text-2xl font-extrabold text-brand-green mb-4">Marketing Medicine</p>
-            <div class="w-48 h-1 bg-neutral-800 rounded-full overflow-hidden mx-auto">
-                <div id="loader-bar" class="w-0 h-full bg-brand-green transition-all duration-300"></div>
-            </div>
-            <p class="text-xs text-neutral-400 mt-3 font-mono uppercase tracking-widest">Initializing Digital Therapeutics...</p>
-        </div>
-    </div>
-
-    <script>
-        (function() {
-            var lb = document.getElementById('loader-bar');
-            var l  = document.getElementById('loader');
-            lb.style.transition = 'width 3.5s ease';
-            setTimeout(function(){ lb.style.width = '100%'; }, 100);
-            setTimeout(function(){
-                l.style.opacity = '0';
-                setTimeout(function(){ if(l.parentNode) l.remove(); }, 700);
-            }, 4500);
-        })();
-    </script>
 
     <!-- Horizontal Navigation Progress Bar -->
     <div class="fixed left-0 w-full h-1 bg-neutral-100 z-40" style="top: 0;">
