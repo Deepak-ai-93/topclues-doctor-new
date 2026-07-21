@@ -220,6 +220,19 @@
         </div>
     </div>
 
+    <script>
+        (function() {
+            var lb = document.getElementById('loader-bar');
+            var l  = document.getElementById('loader');
+            lb.style.transition = 'width 3.5s ease';
+            setTimeout(function(){ lb.style.width = '100%'; }, 100);
+            setTimeout(function(){
+                l.style.opacity = '0';
+                setTimeout(function(){ if(l.parentNode) l.remove(); }, 700);
+            }, 4500);
+        })();
+    </script>
+
     <!-- Horizontal Navigation Progress Bar -->
     <div class="fixed left-0 w-full h-1 bg-neutral-100 z-40" style="top: 0;">
         <div id="horizontal-progress" class="h-full bg-brand-green transition-all duration-300" style="width: 16.66%;"></div>
@@ -929,18 +942,6 @@
         const progressBar = document.getElementById('horizontal-progress');
         const navBtns = document.querySelectorAll('.nav-btn');
         const sections = document.querySelectorAll('.horizontal-section');
-
-        // Loading Screen Animation
-        (function() {
-            const loaderBar = document.getElementById('loader-bar');
-            const loader = document.getElementById('loader');
-            loaderBar.style.transition = 'width 3.5s ease';
-            setTimeout(() => { loaderBar.style.width = '100%'; }, 100);
-            setTimeout(() => {
-                loader.style.opacity = '0';
-                setTimeout(() => loader.remove(), 700);
-            }, 4000);
-        })();
 
         // Custom Cursor Movement (desktop only; CSS hides it on touch/coarse pointers)
         const cursor = document.querySelector('.custom-cursor');
