@@ -2,9 +2,9 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Marketing Medicine — Premium Healthcare Digital Marketing Agency</title>
-    
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -35,59 +35,77 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- FontAwesome & Lucide Icons -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- GSAP & Lenis CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 
     <style>
         * {
             box-sizing: border-box;
+        }
+
+        /* Only kill accidental text selection on chrome/UI controls, not on real content */
+        button, .dock-item, nav, .no-select {
+            -webkit-user-select: none;
             user-select: none;
         }
+
+        html {
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #FFFFFF;
             color: #111111;
-        /* Hide scrollbars globally across all browsers & devices */
-        html, body, #horizontal-wrapper, .horizontal-section {
-            overflow-x: hidden !important;
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
-        html::-webkit-scrollbar, body::-webkit-scrollbar, #horizontal-wrapper::-webkit-scrollbar, .horizontal-section::-webkit-scrollbar {
-            display: none !important;
-            width: 0 !important;
-            height: 0 !important;
         }
 
-        /* Horizontal Container layout & Pure Horizontal Scroll */
+        /* Hide scrollbars globally across all browsers & devices, but keep scrolling functional */
+        html, body, #horizontal-wrapper, .horizontal-section {
+            overflow-x: hidden;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;     /* Firefox */
+        }
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar,
+        #horizontal-wrapper::-webkit-scrollbar,
+        .horizontal-section::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        /* Horizontal Container layout */
         #horizontal-wrapper {
             display: flex;
             width: 600vw;
-            height: calc(100vh - 70px);
+            height: calc(100vh - var(--header-h, 96px));
             flex-wrap: nowrap;
             position: relative;
-        }
-        .horizontal-section {
-            width: 100vw;
-            height: calc(100vh - 70px);
-            flex-shrink: 0;
-            overflow: hidden !important; /* Disables vertical inner scroll */
-            position: relative;
+            will-change: transform;
         }
 
-        /* Mobile specific layout tweaks */
+        .horizontal-section {
+            width: 100vw;
+            height: calc(100vh - var(--header-h, 96px));
+            flex-shrink: 0;
+            position: relative;
+            overflow-y: auto;         /* allow internal vertical scroll for tall content */
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: contain; /* stop rubber-banding from bleeding into slide logic */
+        }
+
         @media (max-width: 768px) {
-            #horizontal-wrapper {
-                height: calc(100dvh - 65px);
+            :root { --header-h: 66px; }
+            #horizontal-wrapper, .horizontal-section {
+                height: calc(100dvh - 66px);
             }
-            .horizontal-section {
-                height: calc(100dvh - 65px);
-            }
+        }
+        @media (min-width: 769px) and (max-width: 1023px) {
+            :root { --header-h: 80px; }
+        }
+        @media (min-width: 1024px) {
+            :root { --header-h: 100px; }
         }
 
         /* Floating Blob Animations */
@@ -101,6 +119,10 @@
         .floating-shape-delayed {
             animation: floatSlow 8s ease-in-out infinite 2s;
         }
+        @media (prefers-reduced-motion: reduce) {
+            .floating-shape, .floating-shape-delayed { animation: none; }
+            * { scroll-behavior: auto !important; }
+        }
 
         /* Glassmorphism */
         .glass-card {
@@ -111,7 +133,7 @@
 
         /* Dock styling */
         .menu-dock {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(229, 231, 235, 0.9);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
@@ -122,18 +144,59 @@
         }
         .dock-item:hover {
             transform: translateY(-4px) scale(1.05);
+        }
+
+        /* Visible keyboard focus for accessibility */
+        a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+            outline: 2px solid #16A34A;
+            outline-offset: 2px;
+        }
+
+        /* Slide progress dots on mobile (supplement to dock labels being hidden) */
+        .slide-dot {
+            width: 6px; height: 6px; border-radius: 9999px;
+            background: #D1D5DB;
+            transition: all .3s ease;
+        }
+        .slide-dot.active {
+            width: 18px;
+            background: #16A34A;
+        }
+
+        /* Custom cursor - desktop only, fine pointer only */
+        .custom-cursor, .custom-cursor-dot {
+            position: fixed;
+            top: 0; left: 0;
+            border-radius: 9999px;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: opacity .2s ease;
+        }
+        .custom-cursor {
+            width: 32px; height: 32px;
+            border: 1.5px solid rgba(22,163,74,0.5);
+        }
+        .custom-cursor-dot {
+            width: 5px; height: 5px;
+            background: #16A34A;
+        }
+        @media (hover: none), (pointer: coarse) {
+            .custom-cursor, .custom-cursor-dot { display: none !important; }
+        }
     </style>
 </head>
-<body class="noise-bg">
+<body>
 
-    <!-- Custom Cursor Elements -->
-    <div class="custom-cursor hidden md:block"></div>
-    <div class="custom-cursor-dot hidden md:block"></div>
+    <!-- Custom Cursor Elements (desktop, fine-pointer only via CSS) -->
+    <div class="custom-cursor" aria-hidden="true"></div>
+    <div class="custom-cursor-dot" aria-hidden="true"></div>
 
     <!-- Loading Screen -->
     <div id="loader" class="fixed inset-0 z-[100000] bg-brand-dark text-white flex flex-col items-center justify-center transition-opacity duration-700">
         <div class="text-center p-6">
-            <img src="assets/TCS@Logo-01.png" alt="Marketing Medicine Logo" class="h-14 sm:h-20 md:h-24 w-auto max-w-[260px] sm:max-w-[360px] mx-auto mb-6 object-contain filter drop-shadow-xl">
+            <img src="assets/TCS@Logo-01.png" alt="Marketing Medicine Logo" class="h-14 sm:h-20 md:h-24 w-auto max-w-[260px] sm:max-w-[360px] mx-auto mb-6 object-contain filter drop-shadow-xl" onerror="this.style.display='none'; document.getElementById('loader-fallback-text').style.display='block';">
+            <p id="loader-fallback-text" class="hidden text-2xl font-extrabold text-brand-green mb-4">Marketing Medicine</p>
             <div class="w-48 h-1 bg-neutral-800 rounded-full overflow-hidden mx-auto">
                 <div id="loader-bar" class="w-0 h-full bg-brand-green transition-all duration-300"></div>
             </div>
@@ -141,27 +204,27 @@
         </div>
     </div>
 
-    <!-- Fixed Top Navigation Bar with Responsive Large Logo -->
-    <header class="fixed top-0 left-0 w-full z-40 bg-white/95 backdrop-blur-md border-b border-neutral-200/80 px-4 sm:px-8 py-3 transition-all duration-300">
+    <!-- Fixed Top Navigation Bar -->
+    <header class="fixed top-0 left-0 w-full z-40 bg-white/95 backdrop-blur-md border-b border-neutral-200/80 px-4 sm:px-8 py-2.5 sm:py-3 transition-all duration-300">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <a href="#" onclick="goToSlide(0); return false;" class="flex items-center justify-center sm:justify-start w-full sm:w-auto group focus:outline-none" title="Marketing Medicine Home">
-                <img src="assets/TCS@Logo-01.png" alt="Marketing Medicine Logo" class="h-12 sm:h-16 md:h-18 lg:h-20 w-auto max-w-[240px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[440px] object-contain transition-transform duration-300 group-hover:scale-[1.02]">
+                <img src="assets/TCS@Logo-01.png" alt="Marketing Medicine Logo" class="h-10 sm:h-14 md:h-16 lg:h-20 w-auto max-w-[200px] sm:max-w-[280px] md:max-w-[340px] lg:max-w-[400px] object-contain transition-transform duration-300 group-hover:scale-[1.02]" onerror="this.outerHTML='<span class=\'text-xl sm:text-2xl font-extrabold text-brand-dark\'>Marketing <span class=\'text-brand-green\'>Medicine</span></span>';">
             </a>
         </div>
     </header>
 
     <!-- Horizontal Navigation Progress Bar -->
-    <div class="fixed top-[62px] sm:top-[76px] md:top-[86px] lg:top-[96px] left-0 w-full h-1 bg-neutral-100 z-40">
+    <div class="fixed left-0 w-full h-1 bg-neutral-100 z-40" style="top: var(--header-h, 96px);">
         <div id="horizontal-progress" class="h-full bg-brand-green transition-all duration-300" style="width: 16.66%;"></div>
     </div>
 
     <!-- HORIZONTAL WRAPPER CONTAINER -->
-    <div id="horizontal-wrapper" class="pt-[66px] sm:pt-[80px] md:pt-[90px] lg:pt-[100px]">
+    <div id="horizontal-wrapper" style="margin-top: var(--header-h, 96px);">
 
         <!-- ================= PAGE 1: HOME ================= -->
-        <section class="horizontal-section vertical-scroll-panel" id="page-home">
+        <section class="horizontal-section" id="page-home">
             <div class="min-h-full pt-4 sm:pt-10 pb-28 sm:pb-32 px-4 sm:px-8 lg:px-20 max-w-7xl mx-auto flex flex-col justify-between">
-                
+
                 <!-- Hero Content -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center my-auto py-6 sm:py-12">
                     <div class="lg:col-span-7">
@@ -172,27 +235,27 @@
                             From Consultation Room <br class="hidden sm:inline">
                             <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-green to-brand-darkGreen">to DIGITAL ROOM</span>
                         </h1>
-                        <p class="text-base sm:text-xl text-brand-grayText font-normal mb-6 sm:mb-8 max-w-xl leading-relaxed">
+                        <p class="text-base sm:text-xl text-brand-grayText font-normal mb-6 sm:mb-8 max-w-xl leading-relaxed no-select" style="user-select:text;">
                             We Diagnose. We Prescribe. We Grow Your Practice. Elevating world-class doctors and elite hospitals through high-converting digital ecosystems.
                         </p>
-                        
+
                         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-                            <button onclick="goToSlide(1)" class="px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-brand-green to-brand-darkGreen text-white font-bold text-sm sm:text-base shadow-xl shadow-brand-green/30 hover:shadow-brand-green/50 transition-all duration-300 flex items-center justify-center gap-3 group">
+                            <button onclick="goToSlide(1)" class="px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-brand-green to-brand-darkGreen text-white font-bold text-sm sm:text-base shadow-xl shadow-brand-green/30 hover:shadow-brand-green/50 active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-3 group">
                                 <span>Explore Digital Doses</span>
                                 <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                             </button>
                         </div>
 
                         <!-- Trusted by counters badge -->
-                        <div class="mt-12 pt-8 border-t border-brand-border flex items-center gap-6">
-                            <div class="flex -space-x-3 overflow-hidden">
-                                <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&auto=format&fit=crop&q=80" alt="Doctor" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
-                                <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&auto=format&fit=crop&q=80" alt="Doctor" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
-                                <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=100&auto=format&fit=crop&q=80" alt="Doctor" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
-                                <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1594824813578-8316c0245a16?w=100&auto=format&fit=crop&q=80" alt="Doctor" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
+                        <div class="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-brand-border flex items-center gap-4 sm:gap-6">
+                            <div class="flex -space-x-3 overflow-hidden shrink-0">
+                                <img class="inline-block h-9 w-9 sm:h-10 sm:w-10 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&auto=format&fit=crop&q=80" alt="Doctor" loading="lazy" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
+                                <img class="inline-block h-9 w-9 sm:h-10 sm:w-10 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&auto=format&fit=crop&q=80" alt="Doctor" loading="lazy" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
+                                <img class="inline-block h-9 w-9 sm:h-10 sm:w-10 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=100&auto=format&fit=crop&q=80" alt="Doctor" loading="lazy" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
+                                <img class="inline-block h-9 w-9 sm:h-10 sm:w-10 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1594824813578-8316c0245a16?w=100&auto=format&fit=crop&q=80" alt="Doctor" loading="lazy" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
                             </div>
                             <div>
-                                <div class="text-sm font-bold text-brand-dark flex items-center gap-1">
+                                <div class="text-sm font-bold text-brand-dark flex items-center gap-1 flex-wrap">
                                     <span class="text-brand-green text-lg font-extrabold">40+</span> Elite Doctors & Hospitals
                                 </div>
                                 <p class="text-xs text-brand-grayText">Scaling patient acquisition organically & profitably.</p>
@@ -201,25 +264,24 @@
                     </div>
 
                     <!-- Right Hero Illustration & Floating Cards -->
-                    <div class="lg:col-span-5 relative">
+                    <div class="lg:col-span-5 relative mt-8 lg:mt-0">
                         <div class="absolute -top-10 -left-10 w-72 h-72 bg-brand-lightGreen rounded-full filter blur-3xl opacity-70 z-0"></div>
-                        <div class="relative z-10 glass-card p-6 rounded-[32px] shadow-2xl border border-white">
-                            <div class="flex items-center justify-between mb-6">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-12 h-12 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-xl">
-                                        <i class="fa-solid fa-chart-line-up"></i>
+                        <div class="relative z-10 glass-card p-5 sm:p-6 rounded-[28px] sm:rounded-[32px] shadow-2xl border border-white">
+                            <div class="flex items-center justify-between mb-6 gap-2">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-xl shrink-0">
+                                        <i class="fa-solid fa-chart-line"></i>
                                     </div>
-                                    <div>
-                                        <h4 class="font-bold text-sm text-brand-dark">Clinical Growth Metric</h4>
-                                        <p class="text-xs text-brand-grayText">Real-time patient booking velocity</p>
+                                    <div class="min-w-0">
+                                        <h4 class="font-bold text-sm text-brand-dark truncate">Clinical Growth Metric</h4>
+                                        <p class="text-xs text-brand-grayText truncate">Real-time patient booking velocity</p>
                                     </div>
                                 </div>
-                                <span class="px-2.5 py-1 rounded-full bg-brand-lightGreen text-brand-darkGreen text-xs font-bold">+340%</span>
+                                <span class="px-2.5 py-1 rounded-full bg-brand-lightGreen text-brand-darkGreen text-xs font-bold shrink-0">+340%</span>
                             </div>
 
-                            <!-- Interactive Chart Mockup -->
                             <div class="bg-neutral-50 p-4 rounded-2xl mb-6 border border-brand-border">
-                                <div class="flex justify-between items-end h-36 gap-2 pt-4">
+                                <div class="flex justify-between items-end h-32 sm:h-36 gap-2 pt-4">
                                     <div class="w-1/6 bg-neutral-200 rounded-t-lg h-[30%]"></div>
                                     <div class="w-1/6 bg-neutral-200 rounded-t-lg h-[45%]"></div>
                                     <div class="w-1/6 bg-brand-green/40 rounded-t-lg h-[65%]"></div>
@@ -231,14 +293,13 @@
                                 </div>
                             </div>
 
-                            <!-- Floating badge 1 -->
-                            <div class="absolute -bottom-6 -left-6 glass-card px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 floating-shape">
-                                <div class="w-8 h-8 rounded-full bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center">
+                            <div class="absolute -bottom-5 -left-4 sm:-bottom-6 sm:-left-6 glass-card px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl shadow-xl flex items-center gap-3 floating-shape max-w-[85%]">
+                                <div class="w-8 h-8 rounded-full bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center shrink-0">
                                     <i class="fa-solid fa-user-doctor"></i>
                                 </div>
-                                <div>
-                                    <p class="text-[11px] font-bold text-brand-dark">Verified Patient Trust</p>
-                                    <p class="text-[10px] text-brand-grayText">99.4% Appointment Satisfaction</p>
+                                <div class="min-w-0">
+                                    <p class="text-[11px] font-bold text-brand-dark truncate">Verified Patient Trust</p>
+                                    <p class="text-[10px] text-brand-grayText truncate">99.4% Appointment Satisfaction</p>
                                 </div>
                             </div>
                         </div>
@@ -246,41 +307,42 @@
                 </div>
 
                 <!-- Statistics Section Below Hero -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 py-12 border-t border-brand-border">
-                    <div class="p-6 rounded-2xl bg-neutral-50 border border-brand-border">
-                        <div class="text-3xl lg:text-4xl font-extrabold text-brand-dark mb-1">2.4M+</div>
-                        <div class="text-sm font-semibold text-brand-green mb-1">Digital Patient Reach</div>
-                        <p class="text-xs text-brand-grayText">Targeted monthly views across digital health channels.</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 py-10 sm:py-12 border-t border-brand-border">
+                    <div class="p-5 sm:p-6 rounded-2xl bg-neutral-50 border border-brand-border">
+                        <div class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-brand-dark mb-1">2.4M+</div>
+                        <div class="text-xs sm:text-sm font-semibold text-brand-green mb-1">Digital Patient Reach</div>
+                        <p class="text-[11px] sm:text-xs text-brand-grayText">Targeted monthly views across digital health channels.</p>
                     </div>
-                    <div class="p-6 rounded-2xl bg-neutral-50 border border-brand-border">
-                        <div class="text-3xl lg:text-4xl font-extrabold text-brand-dark mb-1">100%</div>
-                        <div class="text-sm font-semibold text-brand-green mb-1">Online Medical Presence</div>
-                        <p class="text-xs text-brand-grayText">HIPAA-compliant, high-authority digital footprints.</p>
+                    <div class="p-5 sm:p-6 rounded-2xl bg-neutral-50 border border-brand-border">
+                        <div class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-brand-dark mb-1">100%</div>
+                        <div class="text-xs sm:text-sm font-semibold text-brand-green mb-1">Online Medical Presence</div>
+                        <p class="text-[11px] sm:text-xs text-brand-grayText">HIPAA-compliant, high-authority digital footprints.</p>
                     </div>
-                    <div class="p-6 rounded-2xl bg-neutral-50 border border-brand-border">
-                        <div class="text-3xl lg:text-4xl font-extrabold text-brand-dark mb-1">+310%</div>
-                        <div class="text-sm font-semibold text-brand-green mb-1">Healthcare Growth</div>
-                        <p class="text-xs text-brand-grayText">Average annual revenue increase per partnered clinic.</p>
+                    <div class="p-5 sm:p-6 rounded-2xl bg-neutral-50 border border-brand-border">
+                        <div class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-brand-dark mb-1">+310%</div>
+                        <div class="text-xs sm:text-sm font-semibold text-brand-green mb-1">Healthcare Growth</div>
+                        <p class="text-[11px] sm:text-xs text-brand-grayText">Average annual revenue increase per partnered clinic.</p>
                     </div>
-                    <div class="p-6 rounded-2xl bg-neutral-50 border border-brand-border">
-                        <div class="text-3xl lg:text-4xl font-extrabold text-brand-dark mb-1">40+</div>
-                        <div class="text-sm font-semibold text-brand-green mb-1">Doctor Brand Building</div>
-                        <p class="text-xs text-brand-grayText">Recognized key opinion leaders in medicine.</p>
+                    <div class="p-5 sm:p-6 rounded-2xl bg-neutral-50 border border-brand-border">
+                        <div class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-brand-dark mb-1">40+</div>
+                        <div class="text-xs sm:text-sm font-semibold text-brand-green mb-1">Doctor Brand Building</div>
+                        <p class="text-[11px] sm:text-xs text-brand-grayText">Recognized key opinion leaders in medicine.</p>
                     </div>
                 </div>
 
                 <!-- Swipe Indicator -->
                 <div class="text-center py-6 flex flex-col items-center gap-2">
-                    <span class="text-xs font-bold uppercase tracking-widest text-brand-grayText">Swipe to Explore Plans</span>
+                    <span class="text-xs font-bold uppercase tracking-widest text-brand-grayText">Scroll to Explore Plans</span>
                     <i class="fa-solid fa-arrow-down animate-bounce text-brand-green"></i>
                 </div>
 
             </div>
         </section>
+
         <!-- ================= PAGE 2: PLANS ================= -->
-        <section class="horizontal-section vertical-scroll-panel bg-neutral-50/50" id="page-plans">
+        <section class="horizontal-section bg-neutral-50/50" id="page-plans">
             <div class="min-h-full pt-16 sm:pt-20 pb-32 px-4 sm:px-8 lg:px-20 max-w-7xl mx-auto">
-                <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+                <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
                     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-lightGreen text-brand-darkGreen text-xs font-bold uppercase tracking-wider mb-4">
                         <i class="fa-solid fa-prescription-bottle-medical"></i> Clinical Prescriptions
                     </div>
@@ -290,7 +352,7 @@
 
                 <!-- Plans Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-                    
+
                     <!-- Plan 1: Starter Dose -->
                     <div class="glass-card rounded-[28px] p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between border border-brand-border relative overflow-hidden group">
                         <div class="absolute top-0 right-0 w-28 h-28 bg-brand-lightGreen rounded-bl-full opacity-40 z-0"></div>
@@ -300,7 +362,7 @@
                             </div>
                             <h3 class="text-xl sm:text-2xl font-extrabold text-brand-dark mb-1">Starter Dose</h3>
                             <p class="text-xs text-brand-grayText mb-6">Essential social presence & Meta ads reach for doctors.</p>
-                            
+
                             <div class="space-y-2.5 mb-6 text-xs sm:text-sm text-brand-dark font-medium">
                                 <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>10 Creative Posts</span></div>
                                 <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>1 Animated Reel with Voiceover</span></div>
@@ -323,14 +385,14 @@
                     <div class="bg-gradient-to-b from-brand-dark to-neutral-900 text-white rounded-[28px] p-6 sm:p-8 shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between relative overflow-hidden group border-2 border-brand-green">
                         <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand-green rounded-full filter blur-3xl opacity-30 z-0"></div>
                         <div class="absolute top-4 right-4 bg-brand-green text-white text-[9px] sm:text-[10px] uppercase font-extrabold px-2.5 py-1 rounded-full tracking-widest shadow-md">Most Popular</div>
-                        
+
                         <div class="relative z-10">
                             <div class="w-12 h-12 rounded-2xl bg-brand-green/20 text-brand-green flex items-center justify-center text-xl mb-4 shadow-inner">
                                 <i class="fa-solid fa-chart-line"></i>
                             </div>
                             <h3 class="text-xl sm:text-2xl font-extrabold mb-1 text-white">Growth Dose</h3>
                             <p class="text-xs text-neutral-400 mb-6">High-converting ad setup & performance management.</p>
-                            
+
                             <div class="space-y-2.5 mb-6 text-xs sm:text-sm text-neutral-200 font-medium">
                                 <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>Lead Capturing Ad Campaign Setup</span></div>
                                 <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>Ad Creation & Management</span></div>
@@ -358,7 +420,7 @@
                             </div>
                             <h3 class="text-xl sm:text-2xl font-extrabold text-brand-dark mb-1">Digital Surgery</h3>
                             <p class="text-xs text-brand-grayText mb-6">Complete web ecosystem, analytics & Google Business setup.</p>
-                            
+
                             <div class="space-y-2.5 mb-6 text-xs sm:text-sm text-brand-dark font-medium">
                                 <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>Fully Functional Responsive Basic Website</span></div>
                                 <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>Online Appointment Booking</span></div>
@@ -387,7 +449,7 @@
                             </div>
                             <h3 class="text-xl sm:text-2xl font-extrabold text-brand-dark mb-1">Premium Visibility</h3>
                             <p class="text-xs text-brand-grayText mb-6">Full video shooting, animated reels & premium posts.</p>
-                            
+
                             <div class="space-y-2.5 mb-6 text-xs sm:text-sm text-brand-dark font-medium">
                                 <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>4 Creative Posts/month</span></div>
                                 <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-brand-green mt-0.5"></i> <span>1 Animated Reel with Voiceover</span></div>
@@ -410,20 +472,19 @@
         </section>
 
         <!-- ================= PAGE 3: ABOUT ================= -->
-        <section class="horizontal-section vertical-scroll-panel" id="page-about">
-            <div class="min-h-full pt-20 pb-32 px-6 lg:px-20 max-w-7xl mx-auto">
-                
-                <!-- Headline & Storytelling -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
+        <section class="horizontal-section" id="page-about">
+            <div class="min-h-full pt-16 sm:pt-20 pb-32 px-4 sm:px-6 lg:px-20 max-w-7xl mx-auto">
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center mb-16">
                     <div class="lg:col-span-7">
                         <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-mint text-brand-darkGreen text-xs font-bold uppercase tracking-wider mb-6">
                             <i class="fa-solid fa-dna"></i> Our Philosophy
                         </div>
-                        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-brand-dark leading-[1.1] mb-6">
+                        <h2 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-brand-dark leading-[1.1] mb-6">
                             We Don't Just Market Clinics.<br>
                             <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-green to-brand-darkGreen">We Build Healthcare Brands.</span>
                         </h2>
-                        <p class="text-lg text-brand-grayText mb-6 leading-relaxed">
+                        <p class="text-base sm:text-lg text-brand-grayText mb-6 leading-relaxed">
                             Traditional marketing agencies treat healthcare like e-commerce. They use aggressive sales tactics and clickbait. At Marketing Medicine, we believe patient trust is sacred. Our approach is clinical, evidence-based, and deeply empathetic.
                         </p>
                         <p class="text-brand-grayText mb-8 leading-relaxed">
@@ -431,25 +492,24 @@
                         </p>
                     </div>
 
-                    <!-- Cinematic Video Mockup Container -->
                     <div class="lg:col-span-5">
-                        <div class="relative rounded-[32px] overflow-hidden shadow-2xl border-4 border-white group">
-                            <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&auto=format&fit=crop&q=80" alt="Modern Clinic" class="w-full h-[360px] object-cover group-hover:scale-105 transition-transform duration-700" onerror="this.src='https://placehold.co/600x400/16A34A/FFFFFF?text=Marketing+Medicine'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent flex flex-col justify-end p-8 text-white">
+                        <div class="relative rounded-[28px] sm:rounded-[32px] overflow-hidden shadow-2xl border-4 border-white group">
+                            <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&auto=format&fit=crop&q=80" alt="Modern Clinic" loading="lazy" class="w-full h-[280px] sm:h-[360px] object-cover group-hover:scale-105 transition-transform duration-700" onerror="this.src='https://placehold.co/600x400/16A34A/FFFFFF?text=Marketing+Medicine'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent flex flex-col justify-end p-6 sm:p-8 text-white">
                                 <div class="w-12 h-12 rounded-full bg-brand-green flex items-center justify-center text-white mb-3 shadow-lg shadow-brand-green/50 cursor-pointer">
                                     <i class="fa-solid fa-play ml-0.5"></i>
                                 </div>
-                                <h4 class="text-xl font-bold">Watch Our Clinical Story</h4>
+                                <h4 class="text-lg sm:text-xl font-bold">Watch Our Clinical Story</h4>
                                 <p class="text-xs text-neutral-300">How we transformed 40+ medical practices into regional authorities.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Animated Timeline / 4-Step Clinical Process -->
+                <!-- 4-Step Clinical Process -->
                 <div class="mb-16">
-                    <h3 class="text-2xl font-extrabold text-brand-dark text-center mb-12">The Clinical Growth Protocol</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <h3 class="text-2xl font-extrabold text-brand-dark text-center mb-10 sm:mb-12">The Clinical Growth Protocol</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6">
                         <div class="glass-card p-6 rounded-2xl relative border border-brand-border">
                             <span class="text-3xl font-extrabold text-brand-green block mb-3 font-mono">01</span>
                             <h4 class="font-bold text-lg text-brand-dark mb-2">Diagnose</h4>
@@ -474,22 +534,22 @@
                 </div>
 
                 <!-- Mission, Vision, Values Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="p-8 rounded-[24px] bg-neutral-50 border border-brand-border">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                    <div class="p-6 sm:p-8 rounded-[24px] bg-neutral-50 border border-brand-border">
                         <div class="w-12 h-12 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-xl mb-6">
                             <i class="fa-solid fa-bullseye"></i>
                         </div>
                         <h4 class="text-xl font-bold text-brand-dark mb-3">Our Mission</h4>
                         <p class="text-sm text-brand-grayText leading-relaxed">To empower ethical medical practitioners with world-class digital visibility so every patient finds the right doctor instantly.</p>
                     </div>
-                    <div class="p-8 rounded-[24px] bg-neutral-50 border border-brand-border">
+                    <div class="p-6 sm:p-8 rounded-[24px] bg-neutral-50 border border-brand-border">
                         <div class="w-12 h-12 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-xl mb-6">
                             <i class="fa-solid fa-eye"></i>
                         </div>
                         <h4 class="text-xl font-bold text-brand-dark mb-3">Our Vision</h4>
                         <p class="text-sm text-brand-grayText leading-relaxed">To eradicate digital noise in healthcare and set the global gold standard for transparent, patient-centric marketing.</p>
                     </div>
-                    <div class="p-8 rounded-[24px] bg-neutral-50 border border-brand-border">
+                    <div class="p-6 sm:p-8 rounded-[24px] bg-neutral-50 border border-brand-border">
                         <div class="w-12 h-12 rounded-2xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center text-xl mb-6">
                             <i class="fa-solid fa-handshake-angle"></i>
                         </div>
@@ -502,27 +562,26 @@
         </section>
 
         <!-- ================= PAGE 4: TESTIMONIALS ================= -->
-        <section class="horizontal-section vertical-scroll-panel bg-neutral-50/50" id="page-testimonials">
-            <div class="min-h-full pt-20 pb-32 px-6 lg:px-20 max-w-7xl mx-auto">
-                <div class="text-center max-w-2xl mx-auto mb-16">
+        <section class="horizontal-section bg-neutral-50/50" id="page-testimonials">
+            <div class="min-h-full pt-16 sm:pt-20 pb-32 px-4 sm:px-6 lg:px-20 max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
                     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-lightGreen text-brand-darkGreen text-xs font-bold uppercase tracking-wider mb-4">
                         <i class="fa-solid fa-comments"></i> Doctor Stories
                     </div>
-                    <h2 class="text-4xl sm:text-5xl font-extrabold text-brand-dark tracking-tight mb-4">Trusted by Leading Physicians</h2>
-                    <p class="text-brand-grayText text-base sm:text-lg">Real feedback from doctors and clinic directors whose practices were transformed by Marketing Medicine.</p>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-brand-dark tracking-tight mb-4">Trusted by Leading Physicians</h2>
+                    <p class="text-brand-grayText text-sm sm:text-lg">Real feedback from doctors and clinic directors whose practices were transformed by Marketing Medicine.</p>
                 </div>
 
-                <!-- Messaging-App Style Testimonials Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+
                     <!-- Testimonial 1 -->
                     <div class="glass-card p-6 rounded-[24px] shadow-lg border border-brand-border flex flex-col justify-between relative">
                         <div class="flex items-start gap-4 mb-4">
-                            <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=100&auto=format&fit=crop&q=80" alt="Dr. Aris Vance" class="w-14 h-14 rounded-full object-cover border-2 border-brand-green shadow-md" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
-                            <div>
-                                <div class="flex items-center gap-2">
+                            <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=100&auto=format&fit=crop&q=80" alt="Dr. Aris Vance" loading="lazy" class="w-14 h-14 rounded-full object-cover border-2 border-brand-green shadow-md shrink-0" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2 flex-wrap">
                                     <h4 class="font-bold text-brand-dark text-base">Dr. Aris Vance, MD</h4>
-                                    <span class="bg-brand-lightGreen text-brand-darkGreen text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"><i class="fa-solid fa-check"></i> Verified</span>
+                                    <span class="bg-brand-lightGreen text-brand-darkGreen text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shrink-0"><i class="fa-solid fa-check"></i> Verified</span>
                                 </div>
                                 <p class="text-xs text-brand-grayText">Chief Surgeon, Metro Cardiology Institute</p>
                                 <div class="text-amber-400 text-xs mt-1">
@@ -530,20 +589,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-brand-mint/50 p-4 rounded-2xl text-sm text-brand-dark font-medium relative ml-6 border border-brand-green/20">
+                        <div class="bg-brand-mint/50 p-4 rounded-2xl text-sm text-brand-dark font-medium relative ml-4 sm:ml-6 border border-brand-green/20">
                             <div class="absolute -top-2 left-6 w-4 h-4 bg-brand-mint transform rotate-45 border-l border-t border-brand-green/20"></div>
-                            "Marketing Medicine transformed our digital presence completely. Patient inquiries have increased every single month without fail. Their team understands medical ethics and compliance better than anyone else."
+                            Marketing Medicine transformed our digital presence completely. Patient inquiries have increased every single month without fail. Their team understands medical ethics and compliance better than anyone else.
                         </div>
                     </div>
 
                     <!-- Testimonial 2 -->
                     <div class="glass-card p-6 rounded-[24px] shadow-lg border border-brand-border flex flex-col justify-between relative">
                         <div class="flex items-start gap-4 mb-4">
-                            <img src="https://images.unsplash.com/photo-1594824813578-8316c0245a16?w=100&auto=format&fit=crop&q=80" alt="Dr. Elena Rostova" class="w-14 h-14 rounded-full object-cover border-2 border-brand-green shadow-md" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
-                            <div>
-                                <div class="flex items-center gap-2">
+                            <img src="https://images.unsplash.com/photo-1594824813578-8316c0245a16?w=100&auto=format&fit=crop&q=80" alt="Dr. Elena Rostova" loading="lazy" class="w-14 h-14 rounded-full object-cover border-2 border-brand-green shadow-md shrink-0" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2 flex-wrap">
                                     <h4 class="font-bold text-brand-dark text-base">Dr. Elena Rostova, DDS</h4>
-                                    <span class="bg-brand-lightGreen text-brand-darkGreen text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"><i class="fa-solid fa-check"></i> Verified</span>
+                                    <span class="bg-brand-lightGreen text-brand-darkGreen text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shrink-0"><i class="fa-solid fa-check"></i> Verified</span>
                                 </div>
                                 <p class="text-xs text-brand-grayText">Founder, Apex Aesthetic Dental Studio</p>
                                 <div class="text-amber-400 text-xs mt-1">
@@ -551,20 +610,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-brand-mint/50 p-4 rounded-2xl text-sm text-brand-dark font-medium relative ml-6 border border-brand-green/20">
+                        <div class="bg-brand-mint/50 p-4 rounded-2xl text-sm text-brand-dark font-medium relative ml-4 sm:ml-6 border border-brand-green/20">
                             <div class="absolute -top-2 left-6 w-4 h-4 bg-brand-mint transform rotate-45 border-l border-t border-brand-green/20"></div>
-                            "Our cosmetic dental bookings for high-ticket implants tripled in 90 days. The Growth Dose package is easily the best ROI our practice has ever experienced. Absolute professionals."
+                            Our cosmetic dental bookings for high-ticket implants tripled in 90 days. The Growth Dose package is easily the best ROI our practice has ever experienced. Absolute professionals.
                         </div>
                     </div>
 
                     <!-- Testimonial 3 -->
                     <div class="glass-card p-6 rounded-[24px] shadow-lg border border-brand-border flex flex-col justify-between relative">
                         <div class="flex items-start gap-4 mb-4">
-                            <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=100&auto=format&fit=crop&q=80" alt="Dr. Marcus Thorne" class="w-14 h-14 rounded-full object-cover border-2 border-brand-green shadow-md" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
-                            <div>
-                                <div class="flex items-center gap-2">
-                                    <h4 class="font-bold text-brand-dark text-base">Dr. Marcus Thorne, Orthopedic Surgeon</h4>
-                                    <span class="bg-brand-lightGreen text-brand-darkGreen text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"><i class="fa-solid fa-check"></i> Verified</span>
+                            <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=100&auto=format&fit=crop&q=80" alt="Dr. Marcus Thorne" loading="lazy" class="w-14 h-14 rounded-full object-cover border-2 border-brand-green shadow-md shrink-0" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <h4 class="font-bold text-brand-dark text-base">Dr. Marcus Thorne</h4>
+                                    <span class="bg-brand-lightGreen text-brand-darkGreen text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shrink-0"><i class="fa-solid fa-check"></i> Verified</span>
                                 </div>
                                 <p class="text-xs text-brand-grayText">Director, Spine & Joint Care Clinic</p>
                                 <div class="text-amber-400 text-xs mt-1">
@@ -572,20 +631,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-brand-mint/50 p-4 rounded-2xl text-sm text-brand-dark font-medium relative ml-6 border border-brand-green/20">
+                        <div class="bg-brand-mint/50 p-4 rounded-2xl text-sm text-brand-dark font-medium relative ml-4 sm:ml-6 border border-brand-green/20">
                             <div class="absolute -top-2 left-6 w-4 h-4 bg-brand-mint transform rotate-45 border-l border-t border-brand-green/20"></div>
-                            "They built us an incredible online authority. Patients now come to us already trusting our expertise because of the educational content Marketing Medicine produced."
+                            They built us an incredible online authority. Patients now come to us already trusting our expertise because of the educational content Marketing Medicine produced.
                         </div>
                     </div>
 
                     <!-- Testimonial 4 -->
                     <div class="glass-card p-6 rounded-[24px] shadow-lg border border-brand-border flex flex-col justify-between relative">
                         <div class="flex items-start gap-4 mb-4">
-                            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&auto=format&fit=crop&q=80" alt="Dr. Sarah Jenkins" class="w-14 h-14 rounded-full object-cover border-2 border-brand-green shadow-md" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
-                            <div>
-                                <div class="flex items-center gap-2">
-                                    <h4 class="font-bold text-brand-dark text-base">Dr. Sarah Jenkins, Pediatrician</h4>
-                                    <span class="bg-brand-lightGreen text-brand-darkGreen text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"><i class="fa-solid fa-check"></i> Verified</span>
+                            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&auto=format&fit=crop&q=80" alt="Dr. Sarah Jenkins" loading="lazy" class="w-14 h-14 rounded-full object-cover border-2 border-brand-green shadow-md shrink-0" onerror="this.src='https://placehold.co/100x100/16A34A/FFFFFF?text=Dr'">
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <h4 class="font-bold text-brand-dark text-base">Dr. Sarah Jenkins</h4>
+                                    <span class="bg-brand-lightGreen text-brand-darkGreen text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shrink-0"><i class="fa-solid fa-check"></i> Verified</span>
                                 </div>
                                 <p class="text-xs text-brand-grayText">Head of Pediatrics, Children's Wellness Hub</p>
                                 <div class="text-amber-400 text-xs mt-1">
@@ -593,9 +652,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-brand-mint/50 p-4 rounded-2xl text-sm text-brand-dark font-medium relative ml-6 border border-brand-green/20">
+                        <div class="bg-brand-mint/50 p-4 rounded-2xl text-sm text-brand-dark font-medium relative ml-4 sm:ml-6 border border-brand-green/20">
                             <div class="absolute -top-2 left-6 w-4 h-4 bg-brand-mint transform rotate-45 border-l border-t border-brand-green/20"></div>
-                            "The responsiveness and deep medical insight of their team is unmatched. They feel like an in-house department rather than an external agency."
+                            The responsiveness and deep medical insight of their team is unmatched. They feel like an in-house department rather than an external agency.
                         </div>
                     </div>
 
@@ -605,44 +664,42 @@
         </section>
 
         <!-- ================= PAGE 5: ACHIEVEMENTS ================= -->
-        <section class="horizontal-section vertical-scroll-panel" id="page-achievements">
-            <div class="min-h-full pt-20 pb-32 px-6 lg:px-20 max-w-7xl mx-auto">
-                <div class="text-center max-w-2xl mx-auto mb-16">
+        <section class="horizontal-section" id="page-achievements">
+            <div class="min-h-full pt-16 sm:pt-20 pb-32 px-4 sm:px-6 lg:px-20 max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
                     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-mint text-brand-darkGreen text-xs font-bold uppercase tracking-wider mb-4">
                         <i class="fa-solid fa-trophy"></i> Proven Track Record
                     </div>
-                    <h2 class="text-4xl sm:text-5xl font-extrabold text-brand-dark tracking-tight mb-4">Building Trust Through Results</h2>
-                    <p class="text-brand-grayText text-base sm:text-lg">Milestones, hospital partnerships, and case studies defining our industry leadership.</p>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-brand-dark tracking-tight mb-4">Building Trust Through Results</h2>
+                    <p class="text-brand-grayText text-sm sm:text-lg">Milestones, hospital partnerships, and case studies defining our industry leadership.</p>
                 </div>
 
-                <!-- Big Counters Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
-                    <div class="p-8 rounded-[24px] bg-neutral-50 border border-brand-border text-center">
-                        <div class="text-4xl lg:text-5xl font-extrabold text-brand-green mb-2 font-mono">40+</div>
-                        <h4 class="font-bold text-brand-dark text-base mb-1">Partnered Doctors</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-10 sm:mb-16">
+                    <div class="p-6 sm:p-8 rounded-[24px] bg-neutral-50 border border-brand-border text-center">
+                        <div class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-green mb-2 font-mono">40+</div>
+                        <h4 class="font-bold text-brand-dark text-sm sm:text-base mb-1">Partnered Doctors</h4>
                         <p class="text-xs text-brand-grayText">Leading medical specialists across 12 states.</p>
                     </div>
-                    <div class="p-8 rounded-[24px] bg-neutral-50 border border-brand-border text-center">
-                        <div class="text-4xl lg:text-5xl font-extrabold text-brand-green mb-2 font-mono">100+</div>
-                        <h4 class="font-bold text-brand-dark text-base mb-1">Projects Completed</h4>
+                    <div class="p-6 sm:p-8 rounded-[24px] bg-neutral-50 border border-brand-border text-center">
+                        <div class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-green mb-2 font-mono">100+</div>
+                        <h4 class="font-bold text-brand-dark text-sm sm:text-base mb-1">Projects Completed</h4>
                         <p class="text-xs text-brand-grayText">High-converting medical websites & funnels.</p>
                     </div>
-                    <div class="p-8 rounded-[24px] bg-neutral-50 border border-brand-border text-center">
-                        <div class="text-4xl lg:text-5xl font-extrabold text-brand-green mb-2 font-mono">2.4M</div>
-                        <h4 class="font-bold text-brand-dark text-base mb-1">Patient Reach</h4>
+                    <div class="p-6 sm:p-8 rounded-[24px] bg-neutral-50 border border-brand-border text-center">
+                        <div class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-green mb-2 font-mono">2.4M</div>
+                        <h4 class="font-bold text-brand-dark text-sm sm:text-base mb-1">Patient Reach</h4>
                         <p class="text-xs text-brand-grayText">Monthly organic impressions & education.</p>
                     </div>
-                    <div class="p-8 rounded-[24px] bg-neutral-50 border border-brand-border text-center">
-                        <div class="text-4xl lg:text-5xl font-extrabold text-brand-green mb-2 font-mono">15+</div>
-                        <h4 class="font-bold text-brand-dark text-base mb-1">Hospital Partnerships</h4>
+                    <div class="p-6 sm:p-8 rounded-[24px] bg-neutral-50 border border-brand-border text-center">
+                        <div class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-green mb-2 font-mono">15+</div>
+                        <h4 class="font-bold text-brand-dark text-sm sm:text-base mb-1">Hospital Partnerships</h4>
                         <p class="text-xs text-brand-grayText">Enterprise healthcare networks.</p>
                     </div>
                 </div>
 
-                <!-- Interactive Timeline Section -->
-                <div class="bg-neutral-50 p-8 rounded-[32px] border border-brand-border mb-16">
+                <div class="bg-neutral-50 p-6 sm:p-8 rounded-[28px] sm:rounded-[32px] border border-brand-border mb-16">
                     <h3 class="text-2xl font-extrabold text-brand-dark mb-8 text-center">Our Evolutionary Journey</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6 relative">
                         <div class="p-6 bg-white rounded-2xl shadow-sm border border-brand-border">
                             <span class="text-brand-green font-mono font-bold text-sm block mb-2">2022</span>
                             <h4 class="font-bold text-brand-dark text-base mb-1">Founded</h4>
@@ -670,25 +727,24 @@
         </section>
 
         <!-- ================= PAGE 6: CONTACT ================= -->
-        <section class="horizontal-section vertical-scroll-panel bg-neutral-50/50" id="page-contact">
-            <div class="min-h-full pt-20 pb-40 px-6 lg:px-20 max-w-7xl mx-auto">
-                <div class="text-center max-w-2xl mx-auto mb-16">
+        <section class="horizontal-section bg-neutral-50/50" id="page-contact">
+            <div class="min-h-full pt-16 sm:pt-20 pb-40 px-4 sm:px-6 lg:px-20 max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
                     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-lightGreen text-brand-darkGreen text-xs font-bold uppercase tracking-wider mb-4">
                         <i class="fa-solid fa-paper-plane"></i> Get in Touch
                     </div>
-                    <h2 class="text-4xl sm:text-5xl font-extrabold text-brand-dark tracking-tight mb-4">Let's Grow Your Practice</h2>
-                    <p class="text-brand-grayText text-base sm:text-lg">Schedule a consultation with our medical growth strategists today.</p>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-brand-dark tracking-tight mb-4">Let's Grow Your Practice</h2>
+                    <p class="text-brand-grayText text-sm sm:text-lg">Schedule a consultation with our medical growth strategists today.</p>
                 </div>
 
-                <!-- Two Column Contact Layout -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
-                    
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16">
+
                     <!-- Left: Contact Details -->
-                    <div class="lg:col-span-5 glass-card p-8 rounded-[32px] border border-brand-border flex flex-col justify-between">
+                    <div class="lg:col-span-5 glass-card p-6 sm:p-8 rounded-[28px] sm:rounded-[32px] border border-brand-border flex flex-col justify-between">
                         <div>
                             <h3 class="text-2xl font-extrabold text-brand-dark mb-6">Contact Information</h3>
                             <p class="text-sm text-brand-grayText mb-8 leading-relaxed">Ready to dominate patient search results and build lasting clinical authority? Reach out to our team directly.</p>
-                            
+
                             <div class="space-y-6 mb-8">
                                 <div class="flex items-start gap-4">
                                     <div class="w-10 h-10 rounded-xl bg-brand-lightGreen text-brand-darkGreen flex items-center justify-center shrink-0">
@@ -696,7 +752,7 @@
                                     </div>
                                     <div>
                                         <div class="text-xs text-brand-grayText uppercase font-semibold">Phone</div>
-                                        <div class="text-sm font-bold text-brand-dark">+1 (800) 555-MEDS</div>
+                                        <a href="tel:+18005556337" class="text-sm font-bold text-brand-dark hover:text-brand-green transition-colors">+1 (800) 555-MEDS</a>
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-4">
@@ -705,7 +761,7 @@
                                     </div>
                                     <div>
                                         <div class="text-xs text-brand-grayText uppercase font-semibold">Email</div>
-                                        <div class="text-sm font-bold text-brand-dark">care@marketingmedicine.com</div>
+                                        <a href="mailto:care@marketingmedicine.com" class="text-sm font-bold text-brand-dark hover:text-brand-green transition-colors break-all">care@marketingmedicine.com</a>
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-4">
@@ -729,90 +785,89 @@
                             </div>
                         </div>
 
-                        <!-- Social Links -->
                         <div class="pt-6 border-t border-brand-border flex items-center gap-4">
-                            <a href="#" class="w-10 h-10 rounded-full bg-neutral-100 hover:bg-brand-green hover:text-white flex items-center justify-center text-brand-dark transition-all duration-300"><i class="fa-brands fa-linkedin-in"></i></a>
-                            <a href="#" class="w-10 h-10 rounded-full bg-neutral-100 hover:bg-brand-green hover:text-white flex items-center justify-center text-brand-dark transition-all duration-300"><i class="fa-brands fa-twitter"></i></a>
-                            <a href="#" class="w-10 h-10 rounded-full bg-neutral-100 hover:bg-brand-green hover:text-white flex items-center justify-center text-brand-dark transition-all duration-300"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="#" class="w-10 h-10 rounded-full bg-neutral-100 hover:bg-brand-green hover:text-white flex items-center justify-center text-brand-dark transition-all duration-300"><i class="fa-brands fa-youtube"></i></a>
+                            <a href="#" aria-label="LinkedIn" class="w-10 h-10 rounded-full bg-neutral-100 hover:bg-brand-green hover:text-white flex items-center justify-center text-brand-dark transition-all duration-300"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#" aria-label="Twitter" class="w-10 h-10 rounded-full bg-neutral-100 hover:bg-brand-green hover:text-white flex items-center justify-center text-brand-dark transition-all duration-300"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full bg-neutral-100 hover:bg-brand-green hover:text-white flex items-center justify-center text-brand-dark transition-all duration-300"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#" aria-label="YouTube" class="w-10 h-10 rounded-full bg-neutral-100 hover:bg-brand-green hover:text-white flex items-center justify-center text-brand-dark transition-all duration-300"><i class="fa-brands fa-youtube"></i></a>
                         </div>
                     </div>
 
-                    <!-- Right: Modern Contact Form -->
-                    <div class="lg:col-span-7 glass-card p-8 sm:p-10 rounded-[32px] border border-brand-border shadow-xl">
+                    <!-- Right: Contact Form -->
+                    <div class="lg:col-span-7 glass-card p-6 sm:p-10 rounded-[28px] sm:rounded-[32px] border border-brand-border shadow-xl">
                         <h3 class="text-2xl font-extrabold text-brand-dark mb-6">Book Your Strategy Session</h3>
-                        
+
                         <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-grayText mb-2">Full Name *</label>
-                                    <input type="text" required class="w-full px-4 py-3.5 rounded-xl bg-neutral-50 border border-brand-border text-brand-dark focus:outline-none focus:border-brand-green transition-colors" placeholder="Dr. Jane Doe">
+                                    <label for="name" class="block text-xs font-bold uppercase tracking-wider text-brand-grayText mb-2">Full Name *</label>
+                                    <input id="name" name="name" type="text" required class="w-full px-4 py-3.5 rounded-xl bg-neutral-50 border border-brand-border text-brand-dark focus:outline-none focus:border-brand-green transition-colors" placeholder="Dr. Jane Doe">
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-grayText mb-2">Clinic / Hospital Name *</label>
-                                    <input type="text" required class="w-full px-4 py-3.5 rounded-xl bg-neutral-50 border border-brand-border text-brand-dark focus:outline-none focus:border-brand-green transition-colors" placeholder="Advanced Medical Center">
+                                    <label for="clinic" class="block text-xs font-bold uppercase tracking-wider text-brand-grayText mb-2">Clinic / Hospital Name *</label>
+                                    <input id="clinic" name="clinic" type="text" required class="w-full px-4 py-3.5 rounded-xl bg-neutral-50 border border-brand-border text-brand-dark focus:outline-none focus:border-brand-green transition-colors" placeholder="Advanced Medical Center">
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-grayText mb-2">Phone Number *</label>
-                                    <input type="tel" required class="w-full px-4 py-3.5 rounded-xl bg-neutral-50 border border-brand-border text-brand-dark focus:outline-none focus:border-brand-green transition-colors" placeholder="+91 98765 43210">
+                                    <label for="phone" class="block text-xs font-bold uppercase tracking-wider text-brand-grayText mb-2">Phone Number *</label>
+                                    <input id="phone" name="phone" type="tel" required class="w-full px-4 py-3.5 rounded-xl bg-neutral-50 border border-brand-border text-brand-dark focus:outline-none focus:border-brand-green transition-colors" placeholder="+91 98765 43210">
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-grayText mb-2">Email Address *</label>
-                                    <input type="email" required class="w-full px-4 py-3.5 rounded-xl bg-neutral-50 border border-brand-border text-brand-dark focus:outline-none focus:border-brand-green transition-colors" placeholder="doctor@clinic.com">
+                                    <label for="email" class="block text-xs font-bold uppercase tracking-wider text-brand-grayText mb-2">Email Address *</label>
+                                    <input id="email" name="email" type="email" required class="w-full px-4 py-3.5 rounded-xl bg-neutral-50 border border-brand-border text-brand-dark focus:outline-none focus:border-brand-green transition-colors" placeholder="doctor@clinic.com">
                                 </div>
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold uppercase tracking-wider text-brand-grayText mb-2">Message / Practice Goals</label>
-                                <textarea rows="4" class="w-full px-4 py-3.5 rounded-xl bg-neutral-50 border border-brand-border text-brand-dark focus:outline-none focus:border-brand-green transition-colors" placeholder="Tell us about your practice and growth goals..."></textarea>
+                                <label for="message" class="block text-xs font-bold uppercase tracking-wider text-brand-grayText mb-2">Message / Practice Goals</label>
+                                <textarea id="message" name="message" rows="4" class="w-full px-4 py-3.5 rounded-xl bg-neutral-50 border border-brand-border text-brand-dark focus:outline-none focus:border-brand-green transition-colors" placeholder="Tell us about your practice and growth goals..."></textarea>
                             </div>
 
-                            <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-brand-green to-brand-darkGreen text-white font-bold text-base shadow-lg shadow-brand-green/30 hover:shadow-brand-green/50 transition-all duration-300">
+                            <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-brand-green to-brand-darkGreen text-white font-bold text-base shadow-lg shadow-brand-green/30 hover:shadow-brand-green/50 active:scale-[0.99] transition-all duration-300">
                                 Submit Consultation Request
                             </button>
                         </form>
-                        
-                        <div id="form-success-message" class="hidden mt-6 p-4 rounded-xl bg-brand-lightGreen text-brand-darkGreen text-center font-bold text-sm">
+
+                        <div id="form-success-message" class="hidden mt-6 p-4 rounded-xl bg-brand-lightGreen text-brand-darkGreen text-center font-bold text-sm" role="status">
                             <i class="fa-solid fa-circle-check text-lg mr-2"></i> Thank you! Our medical growth director will contact you within 2 hours.
                         </div>
                     </div>
 
                 </div>
 
-                <!-- Frequently Asked Questions (Accordion) -->
+                <!-- FAQ Accordion -->
                 <div class="mb-16">
-                    <h3 class="text-3xl font-extrabold text-brand-dark text-center mb-8">Frequently Asked Questions</h3>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-brand-dark text-center mb-8">Frequently Asked Questions</h3>
                     <div class="max-w-3xl mx-auto space-y-4">
-                        
+
                         <div class="glass-card rounded-2xl border border-brand-border overflow-hidden">
-                            <button onclick="toggleAccordion(this)" class="w-full p-6 text-left font-bold text-brand-dark flex justify-between items-center">
+                            <button type="button" onclick="toggleAccordion(this)" aria-expanded="false" class="w-full p-5 sm:p-6 text-left font-bold text-brand-dark flex justify-between items-center gap-4">
                                 <span>How is Marketing Medicine different from regular marketing agencies?</span>
-                                <i class="fa-solid fa-chevron-down text-brand-green transition-transform"></i>
+                                <i class="fa-solid fa-chevron-down text-brand-green transition-transform shrink-0"></i>
                             </button>
-                            <div class="hidden px-6 pb-6 text-sm text-brand-grayText leading-relaxed">
+                            <div class="hidden px-5 sm:px-6 pb-6 text-sm text-brand-grayText leading-relaxed">
                                 We are founded by medical professionals and digital marketing experts. We strictly adhere to medical ethics, patient privacy, and compliance guidelines while delivering high-converting patient acquisition campaigns.
                             </div>
                         </div>
 
                         <div class="glass-card rounded-2xl border border-brand-border overflow-hidden">
-                            <button onclick="toggleAccordion(this)" class="w-full p-6 text-left font-bold text-brand-dark flex justify-between items-center">
+                            <button type="button" onclick="toggleAccordion(this)" aria-expanded="false" class="w-full p-5 sm:p-6 text-left font-bold text-brand-dark flex justify-between items-center gap-4">
                                 <span>How long does it take to see an increase in patient bookings?</span>
-                                <i class="fa-solid fa-chevron-down text-brand-green transition-transform"></i>
+                                <i class="fa-solid fa-chevron-down text-brand-green transition-transform shrink-0"></i>
                             </button>
-                            <div class="hidden px-6 pb-6 text-sm text-brand-grayText leading-relaxed">
+                            <div class="hidden px-5 sm:px-6 pb-6 text-sm text-brand-grayText leading-relaxed">
                                 Most clinics experience a noticeable surge in inbound patient inquiries within the first 30 to 45 days as local SEO and targeted patient ads take effect.
                             </div>
                         </div>
 
                         <div class="glass-card rounded-2xl border border-brand-border overflow-hidden">
-                            <button onclick="toggleAccordion(this)" class="w-full p-6 text-left font-bold text-brand-dark flex justify-between items-center">
+                            <button type="button" onclick="toggleAccordion(this)" aria-expanded="false" class="w-full p-5 sm:p-6 text-left font-bold text-brand-dark flex justify-between items-center gap-4">
                                 <span>Are your digital campaigns HIPAA compliant?</span>
-                                <i class="fa-solid fa-chevron-down text-brand-green transition-transform"></i>
+                                <i class="fa-solid fa-chevron-down text-brand-green transition-transform shrink-0"></i>
                             </button>
-                            <div class="hidden px-6 pb-6 text-sm text-brand-grayText leading-relaxed">
+                            <div class="hidden px-5 sm:px-6 pb-6 text-sm text-brand-grayText leading-relaxed">
                                 Absolutely. All patient data capture forms, CRM integrations, and ad funnels are built with rigorous HIPAA compliance standards to protect patient confidentiality.
                             </div>
                         </div>
@@ -820,7 +875,6 @@
                     </div>
                 </div>
 
-                <!-- Footer Copyright & Info -->
                 <footer class="pt-8 text-center text-brand-grayText text-xs">
                     <p>© 2026 Marketing Medicine Inc. All rights reserved. Precision Healthcare Digital Marketing.</p>
                 </footer>
@@ -830,36 +884,35 @@
 
     </div>
 
-    <!-- Floating Menu Dock at Bottom -->
+    <!-- Floating Menu Dock -->
     <div class="fixed bottom-3 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-50 w-[95%] sm:w-auto max-w-lg sm:max-w-none">
         <nav class="menu-dock px-2 sm:px-3 py-2 sm:py-2.5 rounded-full flex items-center justify-between sm:justify-start gap-1 sm:gap-3 shadow-2xl">
-            <!-- Brand Logo Icon in Dock -->
-            <button onclick="goToSlide(0)" class="dock-item h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-neutral-900 flex items-center justify-center shadow-md p-1 sm:p-1.5 hover:bg-black transition-colors flex-shrink-0" title="Marketing Medicine Home">
-                <img src="assets/TCS@Logo-01.png" alt="Marketing Medicine Logo" class="h-full w-full object-contain filter drop-shadow">
+            <button onclick="goToSlide(0)" class="dock-item h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-neutral-900 flex items-center justify-center shadow-md p-1 sm:p-1.5 hover:bg-black transition-colors flex-shrink-0" title="Marketing Medicine Home" aria-label="Home">
+                <img src="assets/TCS@Logo-01.png" alt="" class="h-full w-full object-contain filter drop-shadow" onerror="this.style.display='none'">
             </button>
             <div class="h-5 sm:h-6 w-[1px] bg-neutral-200"></div>
-            
-            <button onclick="goToSlide(0)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-bold text-brand-dark hover:bg-neutral-100 flex items-center gap-1.5" data-index="0">
+
+            <button onclick="goToSlide(0)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-bold text-brand-dark hover:bg-neutral-100 flex items-center gap-1.5" data-index="0" aria-label="Home">
                 <i class="fa-solid fa-house text-brand-green text-xs"></i>
                 <span class="hidden sm:inline">Home</span>
             </button>
-            <button onclick="goToSlide(1)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="1">
+            <button onclick="goToSlide(1)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="1" aria-label="Plans">
                 <i class="fa-solid fa-prescription-bottle-medical text-xs"></i>
                 <span class="hidden sm:inline">Plans</span>
             </button>
-            <button onclick="goToSlide(2)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="2">
+            <button onclick="goToSlide(2)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="2" aria-label="About">
                 <i class="fa-solid fa-dna text-xs"></i>
                 <span class="hidden sm:inline">About</span>
             </button>
-            <button onclick="goToSlide(3)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="3">
+            <button onclick="goToSlide(3)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="3" aria-label="Stories">
                 <i class="fa-solid fa-comments text-xs"></i>
                 <span class="hidden sm:inline">Stories</span>
             </button>
-            <button onclick="goToSlide(4)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="4">
+            <button onclick="goToSlide(4)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="4" aria-label="Results">
                 <i class="fa-solid fa-trophy text-xs"></i>
                 <span class="hidden sm:inline">Results</span>
             </button>
-            <button onclick="goToSlide(5)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="5">
+            <button onclick="goToSlide(5)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="5" aria-label="Contact">
                 <i class="fa-solid fa-paper-plane text-xs"></i>
                 <span class="hidden sm:inline">Contact</span>
             </button>
@@ -868,12 +921,12 @@
 
     <!-- JavaScript Application Logic -->
     <script>
-        // Global variables for horizontal navigation
         let currentSlide = 0;
         const totalSlides = 6;
         const wrapper = document.getElementById('horizontal-wrapper');
         const progressBar = document.getElementById('horizontal-progress');
         const navBtns = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.horizontal-section');
 
         // Loading Screen Animation
         window.addEventListener('load', () => {
@@ -886,10 +939,9 @@
             }, 500);
         });
 
-        // Custom Cursor Movement
+        // Custom Cursor Movement (desktop only; CSS hides it on touch/coarse pointers)
         const cursor = document.querySelector('.custom-cursor');
         const cursorDot = document.querySelector('.custom-cursor-dot');
-        
         window.addEventListener('mousemove', (e) => {
             cursor.style.top = e.clientY + 'px';
             cursor.style.left = e.clientX + 'px';
@@ -897,21 +949,18 @@
             cursorDot.style.left = e.clientX + 'px';
         });
 
-        // Horizontal Slide Navigation Function
+        // Core slide navigation
         function goToSlide(index) {
             if (index < 0) index = 0;
             if (index >= totalSlides) index = totalSlides - 1;
             currentSlide = index;
 
-            // Translate wrapper horizontally
             wrapper.style.transform = `translateX(-${currentSlide * 100}vw)`;
-            wrapper.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+            wrapper.style.transition = 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
 
-            // Update progress bar width
             const progressPercent = ((currentSlide + 1) / totalSlides) * 100;
             progressBar.style.width = `${progressPercent}%`;
 
-            // Update active dock button styling
             navBtns.forEach((btn, idx) => {
                 if (idx === currentSlide) {
                     btn.classList.add('text-brand-dark', 'font-bold', 'bg-neutral-100');
@@ -921,98 +970,169 @@
                 } else {
                     btn.classList.remove('text-brand-dark', 'font-bold', 'bg-neutral-100');
                     btn.classList.add('text-brand-grayText', 'font-semibold');
+                    const icon = btn.querySelector('i');
+                    if (icon) icon.classList.remove('text-brand-green');
                 }
             });
 
-            // Scroll active section back to top
-            const activeSection = document.querySelectorAll('.horizontal-section')[currentSlide];
-            if (activeSection) {
-                activeSection.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+            // Reset the newly active panel's internal scroll to the top
+            const activeSection = sections[currentSlide];
+            if (activeSection) activeSection.scrollTop = 0;
         }
 
-        // Direct Wheel / Trackpad Vertical Scroll -> Horizontal Slide Transition
-        const sections = document.querySelectorAll('.horizontal-section');
+        // --- Hybrid wheel handling: let tall content scroll internally first,
+        //     only advance to the next/previous horizontal slide once the
+        //     active panel has reached its scroll boundary. ---
         let isTransitioning = false;
-        
-        window.addEventListener('wheel', (e) => {
-            if (isTransitioning) return;
+        let wheelLock = false;
 
-            if (e.deltaY > 15 || e.deltaX > 15) {
-                if (currentSlide < totalSlides - 1) {
-                    e.preventDefault();
+        function atTop(el) {
+            return el.scrollTop <= 1;
+        }
+        function atBottom(el) {
+            return el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+        }
+
+        window.addEventListener('wheel', (e) => {
+            if (isTransitioning) { e.preventDefault(); return; }
+
+            const activeSection = sections[currentSlide];
+            const scrollingDown = e.deltaY > 0;
+            const scrollingUp = e.deltaY < 0;
+            const horizontalIntent = Math.abs(e.deltaX) > Math.abs(e.deltaY) * 1.5;
+
+            // Direct horizontal wheel/trackpad gesture always paginates
+            if (horizontalIntent && Math.abs(e.deltaX) > 15) {
+                e.preventDefault();
+                if (e.deltaX > 0 && currentSlide < totalSlides - 1) {
                     isTransitioning = true;
                     goToSlide(currentSlide + 1);
-                    setTimeout(() => { isTransitioning = false; }, 700);
-                }
-            } else if (e.deltaY < -15 || e.deltaX < -15) {
-                if (currentSlide > 0) {
-                    e.preventDefault();
+                    setTimeout(() => { isTransitioning = false; }, 650);
+                } else if (e.deltaX < 0 && currentSlide > 0) {
                     isTransitioning = true;
                     goToSlide(currentSlide - 1);
-                    setTimeout(() => { isTransitioning = false; }, 700);
+                    setTimeout(() => { isTransitioning = false; }, 650);
+                }
+                return;
+            }
+
+            const canScrollInternally = activeSection && activeSection.scrollHeight > activeSection.clientHeight + 2;
+
+            if (scrollingDown) {
+                if (canScrollInternally && !atBottom(activeSection)) {
+                    // let the panel scroll normally
+                    return;
+                }
+                if (currentSlide < totalSlides - 1) {
+                    e.preventDefault();
+                    if (wheelLock) return;
+                    wheelLock = true;
+                    isTransitioning = true;
+                    goToSlide(currentSlide + 1);
+                    setTimeout(() => { isTransitioning = false; }, 650);
+                    setTimeout(() => { wheelLock = false; }, 750);
+                }
+            } else if (scrollingUp) {
+                if (canScrollInternally && !atTop(activeSection)) {
+                    return;
+                }
+                if (currentSlide > 0) {
+                    e.preventDefault();
+                    if (wheelLock) return;
+                    wheelLock = true;
+                    isTransitioning = true;
+                    goToSlide(currentSlide - 1);
+                    setTimeout(() => { isTransitioning = false; }, 650);
+                    setTimeout(() => { wheelLock = false; }, 750);
                 }
             }
         }, { passive: false });
 
-        // Keyboard Navigation Support
+        // Keyboard Navigation
         window.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === 'ArrowDown') {
-                if (currentSlide < totalSlides - 1) {
-                    goToSlide(currentSlide + 1);
-                }
-            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'ArrowUp') {
-                if (currentSlide > 0) {
-                    goToSlide(currentSlide - 1);
-                }
+            const activeSection = sections[currentSlide];
+            if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                if (currentSlide > 0) goToSlide(currentSlide - 1);
+            } else if (e.key === 'ArrowDown') {
+                if (activeSection && !atBottom(activeSection)) return; // let native scroll happen
+                if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowUp') {
+                if (activeSection && !atTop(activeSection)) return;
+                if (currentSlide > 0) goToSlide(currentSlide - 1);
             }
         });
 
-        // Touch Swipe Support for Mobile & Tablets (Horizontal + Vertical end-of-page swipe)
+        // --- Touch handling: distinguish a horizontal swipe (always paginate)
+        //     from a vertical drag (only paginate at scroll boundaries, else
+        //     let the panel's native touch scroll do its job). ---
         let touchStartX = 0;
         let touchStartY = 0;
-        let touchEndX = 0;
-        let touchEndY = 0;
+        let touchStartScrollTop = 0;
 
         window.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
             touchStartY = e.changedTouches[0].screenY;
-        }, false);
+            const activeSection = sections[currentSlide];
+            touchStartScrollTop = activeSection ? activeSection.scrollTop : 0;
+        }, { passive: true });
 
         window.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            touchEndY = e.changedTouches[0].screenY;
-            handleSwipeGesture();
-        }, false);
-
-        function handleSwipeGesture() {
-            const threshold = 40;
+            const touchEndX = e.changedTouches[0].screenX;
+            const touchEndY = e.changedTouches[0].screenY;
             const diffX = touchEndX - touchStartX;
             const diffY = touchEndY - touchStartY;
+            const threshold = 55;
+            const activeSection = sections[currentSlide];
 
-            // Direct mapping for touch swipe (horizontal or vertical drag)
-            if (Math.abs(diffX) > threshold || Math.abs(diffY) > threshold) {
-                if (diffX < -threshold || diffY < -threshold) {
-                    // Swiped Left or Up -> Next Slide
-                    if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1);
-                } else if (diffX > threshold || diffY > threshold) {
-                    // Swiped Right or Down -> Previous Slide
-                    if (currentSlide > 0) goToSlide(currentSlide - 1);
+            if (Math.abs(diffX) < threshold && Math.abs(diffY) < threshold) return;
+            if (isTransitioning) return;
+
+            const isHorizontalSwipe = Math.abs(diffX) > Math.abs(diffY) * 1.3;
+
+            if (isHorizontalSwipe) {
+                if (diffX < -threshold && currentSlide < totalSlides - 1) {
+                    isTransitioning = true;
+                    goToSlide(currentSlide + 1);
+                    setTimeout(() => { isTransitioning = false; }, 650);
+                } else if (diffX > threshold && currentSlide > 0) {
+                    isTransitioning = true;
+                    goToSlide(currentSlide - 1);
+                    setTimeout(() => { isTransitioning = false; }, 650);
+                }
+                return;
+            }
+
+            // Vertical drag: only paginate if the panel was already at its boundary
+            if (!activeSection) return;
+            const canScrollInternally = activeSection.scrollHeight > activeSection.clientHeight + 2;
+
+            if (diffY < -threshold) { // dragged up -> content moves up -> "scroll down"
+                const wasAtBottom = touchStartScrollTop + activeSection.clientHeight >= activeSection.scrollHeight - 2;
+                if ((!canScrollInternally || wasAtBottom) && currentSlide < totalSlides - 1) {
+                    isTransitioning = true;
+                    goToSlide(currentSlide + 1);
+                    setTimeout(() => { isTransitioning = false; }, 650);
+                }
+            } else if (diffY > threshold) { // dragged down -> "scroll up"
+                const wasAtTop = touchStartScrollTop <= 2;
+                if ((!canScrollInternally || wasAtTop) && currentSlide > 0) {
+                    isTransitioning = true;
+                    goToSlide(currentSlide - 1);
+                    setTimeout(() => { isTransitioning = false; }, 650);
                 }
             }
-        }
+        }, { passive: true });
 
         // FAQ Accordion Toggle
         function toggleAccordion(btn) {
             const content = btn.nextElementSibling;
-            
-            if (content.classList.contains('hidden')) {
-                content.classList.remove('hidden');
-                btn.querySelector('.fa-chevron-down').style.transform = 'rotate(180deg)';
-            } else {
-                content.classList.add('hidden');
-                btn.querySelector('.fa-chevron-down').style.transform = 'rotate(0deg)';
-            }
+            const expanded = !content.classList.contains('hidden');
+            content.classList.toggle('hidden');
+            btn.setAttribute('aria-expanded', String(!expanded));
+            const chevron = btn.querySelector('.fa-chevron-down');
+            if (chevron) chevron.style.transform = expanded ? 'rotate(0deg)' : 'rotate(180deg)';
         }
 
         // Contact Form Submission Handler
@@ -1020,10 +1140,19 @@
             e.preventDefault();
             const form = document.getElementById('contact-form');
             const successMsg = document.getElementById('form-success-message');
-            
             form.style.display = 'none';
             successMsg.classList.remove('hidden');
         }
+
+        // Recalculate header height CSS var on resize for pixel-accurate layout
+        function syncHeaderHeight() {
+            const header = document.querySelector('header');
+            if (header) {
+                document.documentElement.style.setProperty('--header-h', header.offsetHeight + 4 + 'px');
+            }
+        }
+        window.addEventListener('load', syncHeaderHeight);
+        window.addEventListener('resize', syncHeaderHeight);
     </script>
 </body>
 </html>
