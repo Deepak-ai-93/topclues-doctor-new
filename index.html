@@ -289,7 +289,7 @@
 
                 <!-- Swipe Indicator -->
                 <div class="text-center py-6 flex flex-col items-center gap-2">
-                    <span class="text-xs font-bold uppercase tracking-widest text-brand-grayText">Scroll to Explore Plans</span>
+                    <span class="text-xs font-bold uppercase tracking-widest text-brand-grayText">Scroll to Explore Doses</span>
                     <i class="fa-solid fa-arrow-down animate-bounce text-brand-green"></i>
                 </div>
 
@@ -307,7 +307,7 @@
                     <p class="text-brand-grayText text-sm sm:text-lg">Tailored marketing prescriptions designed for solo practices, specialized clinics, and growing medical centers.</p>
                 </div>
 
-                <!-- Plans Grid -->
+                <!-- Doses Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
 
                     <!-- Plan 1: Starter Dose -->
@@ -570,16 +570,13 @@
                     </div>
 
                     <div class="lg:col-span-5">
-                        <div class="relative rounded-[28px] sm:rounded-[32px] overflow-hidden shadow-2xl border-4 border-white group cursor-pointer" onclick="this.querySelector('video').play(); this.querySelector('.overlay-content').style.display='none';">
-                            <video class="w-full h-[280px] sm:h-[360px] object-cover" poster="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&auto=format&fit=crop&q=80" preload="metadata" playsinline>
+                        <div class="relative rounded-[28px] sm:rounded-[32px] overflow-hidden shadow-2xl border-4 border-white">
+                            <video class="w-full aspect-video object-cover" poster="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&auto=format&fit=crop&q=80" preload="metadata" playsinline autoplay muted loop>
                                 <source src="assets/WhatsApp%20Video%202026-05-22%20at%203.20.12%20PM.mp4" type="video/mp4">
                             </video>
-                            <div class="overlay-content absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent flex flex-col justify-end p-6 sm:p-8 text-white">
-                                <div class="w-12 h-12 rounded-full bg-brand-green flex items-center justify-center text-white mb-3 shadow-lg shadow-brand-green/50">
-                                    <i class="fa-solid fa-play ml-0.5"></i>
-                                </div>
-                                <h4 class="text-lg sm:text-xl font-bold">Watch Our Clinical Story</h4>
-                                <p class="text-xs text-neutral-300">Marketing Medicine by Topclues Solution — transforming 40+ medical practices.</p>
+                            <div class="absolute bottom-4 left-4 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm text-white text-[10px] font-semibold flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+                                Playing
                             </div>
                         </div>
                     </div>
@@ -971,13 +968,13 @@
                 <i class="fa-solid fa-house text-brand-green text-xs"></i>
                 <span class="hidden sm:inline">Home</span>
             </button>
-            <button onclick="goToSlide(1)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="1" aria-label="Plans">
+            <button onclick="goToSlide(1)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="1" aria-label="Doses">
                 <i class="fa-solid fa-prescription-bottle-medical text-xs"></i>
-                <span class="hidden sm:inline">Plans</span>
+                <span class="hidden sm:inline">Doses</span>
             </button>
-            <button onclick="goToSlide(2)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="2" aria-label="Packages">
+            <button onclick="goToSlide(2)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="2" aria-label="T&C">
                 <i class="fa-solid fa-file-contract text-xs"></i>
-                <span class="hidden sm:inline">Packages</span>
+                <span class="hidden sm:inline">T&C</span>
             </button>
             <button onclick="goToSlide(3)" class="dock-item nav-btn px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-brand-grayText hover:bg-neutral-100 flex items-center gap-1.5" data-index="3" aria-label="About">
                 <i class="fa-solid fa-dna text-xs"></i>
@@ -1229,12 +1226,12 @@
         });
     </script>
 
-    <!-- Floating #ForDoctorsOnly Badge -->
-    <div class="fixed right-0 top-1/2 -translate-y-1/2 z-50 hidden sm:block">
+    <!-- Floating #ForDoctorsOnly Button -->
+    <div class="fixed right-0 top-1/2 -translate-y-1/2 z-50">
         <div class="relative flex items-center animate-pulse">
             <div class="absolute inset-0 rounded-l-full bg-gradient-to-r from-brand-green to-brand-darkGreen blur-sm opacity-40"></div>
-            <div class="relative px-3 py-1.5 rounded-l-full bg-gradient-to-r from-brand-green to-brand-darkGreen text-white text-[10px] font-extrabold uppercase tracking-wider shadow-lg flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+            <div class="relative px-2.5 py-1.5 rounded-l-full bg-gradient-to-r from-brand-green to-brand-darkGreen text-white text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider shadow-lg flex items-center gap-1.5 hover:pr-4 transition-all duration-300 cursor-pointer">
+                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse shrink-0"></span>
                 #ForDoctorsOnly
             </div>
         </div>
