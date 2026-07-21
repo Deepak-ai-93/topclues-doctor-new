@@ -933,12 +933,13 @@
         // Loading Screen Animation
         window.addEventListener('load', () => {
             const loaderBar = document.getElementById('loader-bar');
-            setTimeout(() => { loaderBar.style.width = '100%'; }, 300);
+            loaderBar.style.transition = 'width 3s ease';
+            setTimeout(() => { loaderBar.style.width = '100%'; }, 200);
             setTimeout(() => {
                 const loader = document.getElementById('loader');
                 loader.style.opacity = '0';
                 setTimeout(() => loader.remove(), 700);
-            }, 2500);
+            }, 4000);
         });
 
         // Custom Cursor Movement (desktop only; CSS hides it on touch/coarse pointers)
