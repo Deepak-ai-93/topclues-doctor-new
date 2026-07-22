@@ -866,363 +866,55 @@
                 </div>
 
                 <style>
-                    .review-card { margin-left: 5rem; }
-                    .review-card-img { position: absolute; left: -5rem; top: 0.75rem; width: 150px; height: auto; border-radius: 0.75rem; box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
-                    .review-card-body { padding-left: 5.5rem; }
-                    @media (min-width: 640px) {
-                        .review-card { margin-left: 5.5rem; }
-                        .review-card-img { width: 170px; left: -5.5rem; top: 1rem; border-radius: 1rem; }
-                        .review-card-body { padding-left: 6.5rem; }
+                    .review-bubble {
+                        position: relative;
+                        background: #fff;
+                        border: 1px solid #E5E7EB;
+                        border-radius: 20px;
+                        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
                     }
-                    @media (min-width: 768px) {
-                        .review-card { margin-left: 6rem; }
-                        .review-card-img { width: 190px; left: -6rem; top: 1.25rem; }
-                        .review-card-body { padding-left: 7.5rem; }
-                    }
-                    @media (min-width: 1024px) {
-                        .review-card { margin-left: 6.5rem; }
-                        .review-card-img { width: 210px; left: -6.5rem; top: 1.5rem; border-radius: 1.25rem; }
-                        .review-card-body { padding-left: 8.5rem; }
+                    .review-bubble::before {
+                        content: '';
+                        position: absolute;
+                        top: -10px;
+                        left: 32px;
+                        width: 0;
+                        height: 0;
+                        border-left: 10px solid transparent;
+                        border-right: 10px solid transparent;
+                        border-bottom: 10px solid #fff;
+                        filter: drop-shadow(0 -1px 1px rgba(0,0,0,0.06));
                     }
                 </style>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
-                    <!-- Review 1 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img4.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "Their targeted digital approach increased our OPD footfall by 40% in just two months. Highly recommend their services for any growing practice."
-                            </p>
+                <div class="max-w-3xl mx-auto">
+                    <div class="review-bubble p-6 sm:p-8">
+                        <div class="flex items-center gap-1 mb-4">
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
                         </div>
-                    </div>
+                        <p class="text-sm sm:text-base text-brand-dark leading-relaxed whitespace-pre-line">Proud to have such a dynamic and creative Social Media Marketing Team behind our growing Google presence 🙌
 
-                    <!-- Review 2 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img8.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "Professional team with deep understanding of healthcare marketing. Our online patient inquiries have tripled since we started working with them."
-                            </p>
-                        </div>
-                    </div>
+Leading from the front, Bhavin bhai as Head brings vision, strategy, and consistency that drives our success.
+Rajan, our Team Coordinator, ensures everything runs smoothly and keeps the entire team aligned and motivated.
+Creative storytelling is powered by Yug and Raj, whose scripts bring life, emotion, and clarity to every reel we share.
+And behind the camera, Keval captures every moment perfectly, turning ideas into engaging visual content.
 
-                    <!-- Review 3 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img12.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "The Google Business optimization alone brought us 50+ new patient reviews. Exceptional ROI and completely compliant with medical ethics."
-                            </p>
-                        </div>
-                    </div>
+Together, this team is not just managing social media — they are building trust, visibility, and performance that truly reflect our work.
 
-                    <!-- Review 4 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img16.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
+Grateful to have such a passionate and talented team 🚀
+From
+Team Shreenath Cancer Care</p>
+                        <div class="mt-4 pt-4 border-t border-brand-border flex items-center justify-between">
+                            <div>
+                                <span class="font-bold text-brand-dark text-sm">Swapnil Vanparia</span>
+                                <span class="text-brand-grayText text-xs ml-2">· 7 reviews · 3 months ago</span>
                             </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "From website redesign to patient acquisition campaigns, everything was handled professionally. Our clinic finally has a strong digital footprint."
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Review 5 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img1.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "Exceptional digital strategy that brought real results to our clinic. Highly recommended!"
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Review 6 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img2.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "Their team understood our practice needs perfectly. Patient inquiries have doubled!"
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Review 7 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img3.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "Professionalism at its best. Our online reputation has improved significantly."
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Review 8 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img5.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "Top-notch marketing strategies that truly understand healthcare compliance."
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Review 9 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img6.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "Our Google Business profile has never looked better. Patients find us easily now."
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Review 10 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img7.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "The growth we've seen in patient inquiries is remarkable. Truly a game-changer."
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Review 11 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img9.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "Ethical, professional, and results-driven. Everything a healthcare provider needs."
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Review 12 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img10.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "They handle everything from SEO to social media flawlessly. Highly satisfied."
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Review 13 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img11.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "A dedicated partner who truly cares about our practice growth. Five stars!"
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Review 14 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img13.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "Our patient engagement has improved dramatically. Worth every investment."
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Review 15 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img14.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "Finally a marketing agency that understands medical ethics and compliance."
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Review 16 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img15.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "The team delivered beyond our expectations. Our online presence is stronger than ever."
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Review 17 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img17.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "Exceptional service and measurable results. Our clinic's growth speaks for itself."
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Review 18 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img18.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "They truly bridge the gap between medical expertise and digital visibility."
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Review 19 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img19.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "Highly professional team with deep healthcare marketing expertise."
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Review 20 -->
-                    <div class="glass-card p-4 sm:p-5 md:p-6 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] border border-brand-border shadow-lg relative review-card">
-                        <img src="http://topcluessolutions.in/wp-content/uploads/2025/02/img20.webp" alt="Doctor" class="review-card-img ring-2 ring-brand-green/20">
-                        <div class="review-card-body">
-                            <div class="flex items-center gap-1 mb-1.5">
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                                <i class="fa-solid fa-star text-yellow-400 text-[11px]"></i>
-                            </div>
-                            <p class="text-sm sm:text-base text-brand-dark font-medium leading-relaxed mb-2">
-                                "A fantastic journey of growth with Topclues Solutions. Highly recommend!"
-                            </p>
+                            <a href="https://share.google/4xQzowvtbgvwhKhio" target="_blank" class="text-brand-green hover:text-brand-darkGreen text-xs font-semibold transition-colors">
+                                <i class="fa-brands fa-google"></i> View on Google
+                            </a>
                         </div>
                     </div>
                 </div>
